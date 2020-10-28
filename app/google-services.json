@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "898157521161",
+    "firebase_url": "https://sublet4u-e67db.firebaseio.com",
+    "project_id": "sublet4u-e67db",
+    "storage_bucket": "sublet4u-e67db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898157521161:android:9b7c09d14a98222c5c8bd8",
+        "android_client_info": {
+          "package_name": "com.example.roi.driverapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "898157521161-akitqio5ogukvi80lo6niosh1v4dtemt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNsLh9obO-sXi9-QT_M6NABpfGTK7yqwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "898157521161-akitqio5ogukvi80lo6niosh1v4dtemt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898157521161:android:a1d08927740a42505c8bd8",
+        "android_client_info": {
+          "package_name": "com.example.sublet4u"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "898157521161-akitqio5ogukvi80lo6niosh1v4dtemt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNsLh9obO-sXi9-QT_M6NABpfGTK7yqwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "898157521161-akitqio5ogukvi80lo6niosh1v4dtemt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
