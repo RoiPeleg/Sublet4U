@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -39,7 +40,10 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button registerButton = findViewById(R.id.register);
+        final CheckBox owner = findViewById(R.id.owner);
         FirebaseAuth mAuth;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("");
         // ...
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -67,6 +71,11 @@ public class RegisterActivity extends AppCompatActivity {
                                 // ...
                             }
                         });
+                boolean isOwner = owner.isChecked();
+                if(isOwner)
+                    myRef.child("usersType").child("owner").child(mAuth.getUid().toString()).setValue(mAuth.getUid());
+                else
+                    myRef.child("usersType").child("client").child(mAuth.getUid().toString()).setValue(mAuth.getUid());
             }});
     }
 }
