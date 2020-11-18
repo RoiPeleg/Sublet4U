@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         // ...
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        DatabaseReference myRef = database.getReference("");
         registerButton.setEnabled(true);
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -143,6 +144,14 @@ public class LoginActivity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "signInWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
+                                    if(myRef.child("userType").child("client").child(user.getUid()) != null){
+                                        //check if client
+                                        Intent i = new Intent(new Intent(getApplicationContext(),RegisterActivity.class));
+                                        startActivity(i);
+                                    }else{
+                                        Intent i = new Intent(new Intent(getApplicationContext(),RegisterActivity.class));
+                                        startActivity(i);
+                                    }
                                     //updateUI(user);
                                 } else {
                                     // If sign in fails, display a message to the user.
