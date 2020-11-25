@@ -1,6 +1,7 @@
 package com.example.sublet4u.ui.login;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.sublet4u.data.model.RegisterData;
@@ -27,6 +28,7 @@ import com.example.sublet4u.R;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -41,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText passwordEditText = findViewById(R.id.password);
         final Button registerButton = findViewById(R.id.register);
         final CheckBox owner = findViewById(R.id.owner);
+        final EditText name = findViewById(R.id.disName);
         FirebaseAuth mAuth;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("");
@@ -59,6 +62,11 @@ public class RegisterActivity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
+                                    user.updateProfile( new UserProfileChangeRequest.Builder()
+                                            .setDisplayName(name.getText().toString())
+                                            .setPhotoUri(Uri.parse(""))
+                                            .build()
+                                    );
                                     boolean isOwner = owner.isChecked();
                                     if(isOwner)
                                         myRef.child("usersType").child(mAuth.getUid()).setValue("owner");
@@ -72,7 +80,6 @@ public class RegisterActivity extends AppCompatActivity {
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                     Toast.makeText(RegisterActivity.this, task.getException().toString(),
                                             Toast.LENGTH_SHORT).show();
-                                    //updateUI(null);
                                 }
                             }
                         });
