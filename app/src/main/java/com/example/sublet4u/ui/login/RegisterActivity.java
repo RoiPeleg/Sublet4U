@@ -59,23 +59,24 @@ public class RegisterActivity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    //updateUI(user);
+                                    boolean isOwner = owner.isChecked();
+                                    if(isOwner)
+                                        myRef.child("usersType").child(mAuth.getUid()).setValue("owner");
+                                    else
+                                        myRef.child("usersType").child(mAuth.getUid()).setValue("user");
+
+                                    Intent i = new Intent(new Intent(getApplicationContext(),LoginActivity.class));
+                                    startActivity(i);
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                    Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                    Toast.makeText(RegisterActivity.this, task.getException().toString(),
                                             Toast.LENGTH_SHORT).show();
                                     //updateUI(null);
                                 }
-
-                                // ...
                             }
                         });
-                boolean isOwner = owner.isChecked();
-                if(isOwner)
-                    myRef.child("usersType").child("owner").child(mAuth.getUid().toString()).setValue(mAuth.getUid());
-                else
-                    myRef.child("usersType").child("client").child(mAuth.getUid().toString()).setValue(mAuth.getUid());
+
             }});
     }
 }

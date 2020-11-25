@@ -25,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sublet4u.OwnerActivity;
 import com.example.sublet4u.R;
 import com.example.sublet4u.ui.login.LoginViewModel;
 import com.example.sublet4u.ui.login.LoginViewModelFactory;
@@ -60,7 +61,10 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         // ...
         // Initialize Firebase Auth
+
         mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null)
+            mAuth.signOut();
         DatabaseReference myRef = database.getReference("");
         registerButton.setEnabled(true);
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -133,9 +137,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+//                loadingProgressBar.setVisibility(View.VISIBLE);
                 mAuth.signInWithEmailAndPassword(usernameEditText.getText().toString().trim(), passwordEditText.getText().toString().trim())
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -143,15 +145,29 @@ public class LoginActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "signInWithEmail:success");
+
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    if(myRef.child("userType").child("client").child(user.getUid()) != null){
-                                        //check if client
-                                        Intent i = new Intent(new Intent(getApplicationContext(),RegisterActivity.class));
-                                        startActivity(i);
-                                    }else{
-                                        Intent i = new Intent(new Intent(getApplicationContext(),RegisterActivity.class));
-                                        startActivity(i);
-                                    }
+                                   myRef.child("usersType").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            Toast.makeText(getApplicationContext(),snapshot.child(user.getUid()).getValue().toString(),Toast.LENGTH_LONG).show();
+                                            if(snapshot.child(user.getUid()).getValue().toString().equals("user")){
+                                                //check if client
+                                                Intent i = new Intent(new Intent(getApplicationContext(),RegisterActivity.class));
+                                                startActivity(i);
+                                            }else{
+                                                Intent i = new Intent(new Intent(getApplicationContext(), OwnerActivity.class));
+                                                startActivity(i);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+
                                     //updateUI(user);
                                 } else {
                                     // If sign in fails, display a message to the user.
