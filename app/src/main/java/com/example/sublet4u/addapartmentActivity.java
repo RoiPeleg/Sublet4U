@@ -1,7 +1,9 @@
 package com.example.sublet4u;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,11 +11,19 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.sublet4u.data.model.Aparetment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.provider.MediaStore;
 import android.view.View;
@@ -22,11 +32,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import pub.devrel.easypermissions.EasyPermissions;
+
 public class addapartmentActivity extends AppCompatActivity {
-     ImageView imageView;
+    private ImageView imageView;
+    private StorageReference storageRef;
+    private String picturePath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,10 +56,31 @@ public class addapartmentActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("");
         mAuth = FirebaseAuth.getInstance();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myRef.child("apartment").push().setValue(new Aparetment(name.getText().toString(),desc.getText().toString(),address.getText().toString(), mAuth.getCurrentUser().getUid()));
+                 String ap_id = myRef.child("apartment").push().getKey();
+
+                myRef.child("apartment").child(ap_id).setValue(new Aparetment(name.getText().toString(),desc.getText().toString(),address.getText().toString(), mAuth.getCurrentUser().getUid()));
+                Uri file = Uri.fromFile(new File(picturePath));
+                StorageReference riversRef = storageRef.child("images/").child(ap_id+"").child("firstIm");
+                UploadTask  uploadTask = riversRef.putFile(file);
+
+                // Register observers to listen for when the download is done or if it fails
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Toast.makeText(getApplicationContext(),"Upload Failed",Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                        Toast.makeText(getApplicationContext(),"Upload Successful",Toast.LENGTH_SHORT).show();
+                    }});
+
                 Intent i = new Intent(new Intent(getApplicationContext(), OwnerActivity.class));
                 startActivity(i);
             }
@@ -52,8 +88,18 @@ public class addapartmentActivity extends AppCompatActivity {
         addP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto , 1);
+
+                try {
+                    if (ActivityCompat.checkSelfPermission(addapartmentActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(addapartmentActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                    } else {
+                        Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(galleryIntent, 1);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
         });
     }
@@ -72,7 +118,8 @@ public class addapartmentActivity extends AppCompatActivity {
                                 cursor.moveToFirst();
 
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                                String picturePath = cursor.getString(columnIndex);
+                                picturePath = cursor.getString(columnIndex);
+
                                 imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
                                 cursor.close();
                             }
@@ -80,4 +127,5 @@ public class addapartmentActivity extends AppCompatActivity {
         }
     }
     }
+
 }
