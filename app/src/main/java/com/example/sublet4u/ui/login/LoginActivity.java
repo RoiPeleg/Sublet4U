@@ -25,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sublet4u.FindApartmentUser;
 import com.example.sublet4u.OwnerActivity;
 import com.example.sublet4u.R;
 import com.example.sublet4u.ui.login.LoginViewModel;
@@ -150,10 +151,9 @@ public class LoginActivity extends AppCompatActivity {
                                    myRef.child("usersType").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            Toast.makeText(getApplicationContext(),snapshot.child(user.getUid()).getValue().toString(),Toast.LENGTH_LONG).show();
-                                            if(snapshot.child(user.getUid()).getValue().toString().equals("user")){
+                                            if(snapshot.child(user.getUid()).getValue().equals("user")){
                                                 //check if client
-                                                Intent i = new Intent(new Intent(getApplicationContext(),RegisterActivity.class));
+                                                Intent i = new Intent(new Intent(getApplicationContext(), FindApartmentUser.class));
                                                 startActivity(i);
                                             }else{
                                                 Intent i = new Intent(new Intent(getApplicationContext(), OwnerActivity.class));

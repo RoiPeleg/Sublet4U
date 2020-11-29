@@ -6,6 +6,13 @@ public class Aparetment {
     public String address;
     public String ownerID;
 
+    public Aparetment(){
+        this.name = "";
+        this.desc = "";
+        this.address = "";
+        this.ownerID = "";
+    }
+
     public Aparetment(String name1, String desc, String address, String ownerID){
         this.name = name1;
         this.desc = desc;

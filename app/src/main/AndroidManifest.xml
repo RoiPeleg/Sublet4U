@@ -12,7 +12,12 @@
         <activity
             android:name=".addapartmentActivity"
             android:label="@string/title_activity_addapartment"
-            android:theme="@style/Theme.Sublet4U.NoActionBar"></activity>
+            android:theme="@style/Theme.Sublet4U.NoActionBar" />
+
+        <activity
+            android:name=".FindApartmentUser"
+            android:label="FindApartmentUser"
+            android:theme="@style/Theme.Sublet4U.NoActionBar" />
         <activity
             android:name=".OwnerActivity"
             android:label="@string/title_activity_owner"

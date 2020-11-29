@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -48,41 +50,34 @@ public class FindApartmentUser extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
-        DatabaseReference listApartment = myRef.child("apartment");
         yourName.setText(mAuth.getCurrentUser().getDisplayName());
-        String firstApartment = listApartment.limitToFirst(1).getRef().getKey();
-//        description.setText;
-        storageRef.child("images/"+ firstApartment +"/firstIm").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        Query listApartment = myRef.child("apartment").orderByValue();
+        listApartment.limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onSuccess(byte[] bytes) {
-                // Use the bytes to display the image
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot s : snapshot.getChildren()) {
+                    Toast.makeText(getApplicationContext(),s.getKey(),Toast.LENGTH_LONG).show();
+                    storageRef.child("images/"+ s.getKey() +"/firstIm").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        // Use the bytes to display the image
+                        apaImage.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+                    }
+                }).addOnFailureListener(new OnFailureListener() {@Override public void onFailure(@NonNull Exception exception) {Toast.makeText(getApplicationContext(), exception.toString(), Toast.LENGTH_LONG).show(); }});
 
-                apaImage.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+                    Aparetment apart = s.getValue(Aparetment.class);
+                descriptionInImg.setText(apart.desc);
+                nameInImg.setText(apart.name);
+                addressInImg.setText(apart.address);
+                }
             }
-        }).addOnFailureListener(new OnFailureListener() {
+
             @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
             }
         });
-//        listApartment.limitToFirst(1).getRef().addListenerForSingleValueEvent(new ValueEventListener()
-//        {
-//
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot)
-//            {
-//                Aparetment apart = snapshot.getValue(Aparetment.class);
-//                descriptionInImg.setText(apart.desc);
-//                nameInImg.setText(apart.name);
-//                addressInImg.setText(apart.address);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error)
-//            {
-//                System.out.println(error);
-//            }
-//        });
+
 
         int i = 2;
         like.setOnClickListener(new View.OnClickListener()
