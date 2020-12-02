@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sublet4u.data.model.Aparetment;
+import com.example.sublet4u.data.model.Invitation;
 import com.example.sublet4u.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,6 +31,9 @@ import com.google.firebase.storage.StorageReference;
 public class FindApartmentUser extends AppCompatActivity
 {
     DatabaseReference reference;
+    public Aparetment apart;
+    public String apartID;
+
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -42,6 +46,7 @@ public class FindApartmentUser extends AppCompatActivity
         final TextView addressInImg = findViewById(R.id.addressInImg);
         final TextView nameInImg = findViewById(R.id.nameInImg);
         final TextView yourName = findViewById(R.id.yourName);
+
 
 //        imageView = findViewById(R.id.imageView);
         FirebaseAuth mAuth;
@@ -65,10 +70,11 @@ public class FindApartmentUser extends AppCompatActivity
                     }
                 }).addOnFailureListener(new OnFailureListener() {@Override public void onFailure(@NonNull Exception exception) {Toast.makeText(getApplicationContext(), exception.toString(), Toast.LENGTH_LONG).show(); }});
 
-                    Aparetment apart = s.getValue(Aparetment.class);
+                     apart = s.getValue(Aparetment.class);
                 descriptionInImg.setText(apart.desc);
                 nameInImg.setText(apart.name);
                 addressInImg.setText(apart.address);
+                apartID = s.getKey();
                 }
             }
 
@@ -83,16 +89,15 @@ public class FindApartmentUser extends AppCompatActivity
         like.setOnClickListener(new View.OnClickListener()
         {
 
-            public void onClick(View v) {
-                reference.addValueEventListener(new ValueEventListener() {
+            public void onClick(View v){
+                String invitation_id = myRef.child("Invitations").push().getKey();
+                myRef.child("Invitations").child(invitation_id).setValue(new Invitation(apartID, mAuth.getUid()));
+                listApartment.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        //should go to the chat with the manager
-//                        firstApartment = listApartment.limitToFirst(i);
-//                        i++;
-//                        Intent i = new Intent(new Intent(getApplicationContext(), FindApartmentUser.class));
-//                        startActivity(i);
-
+                        for (DataSnapshot s : snapshot.getChildren()){
+                            
+                        }
                     }
 
                     @Override
