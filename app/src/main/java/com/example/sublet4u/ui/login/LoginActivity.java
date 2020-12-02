@@ -25,11 +25,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sublet4u.FindApartmentUser;
-import com.example.sublet4u.OwnerActivity;
+import com.example.sublet4u.customer.FindApartmentUser;
+import com.example.sublet4u.owner.OwnerActivity;
 import com.example.sublet4u.R;
-import com.example.sublet4u.ui.login.LoginViewModel;
-import com.example.sublet4u.ui.login.LoginViewModelFactory;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

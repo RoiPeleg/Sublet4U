@@ -1,19 +1,17 @@
-package com.example.sublet4u;
+package com.example.sublet4u.owner;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.example.sublet4u.R;
 import com.example.sublet4u.data.model.Aparetment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -33,10 +31,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import pub.devrel.easypermissions.EasyPermissions;
 
 public class addapartmentActivity extends AppCompatActivity {
     private ImageView imageView;

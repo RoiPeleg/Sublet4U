@@ -1,17 +1,15 @@
-package com.example.sublet4u;
+package com.example.sublet4u.owner;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.sublet4u.ui.login.LoginActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.sublet4u.R;
+import com.example.sublet4u.owner.addapartmentActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 import android.widget.Button;
