@@ -106,7 +106,7 @@ public class FindApartmentUser extends AppCompatActivity {
                         descriptionInImg.setText(apart.desc);
                         nameInImg.setText(apart.name);
                         addressInImg.setText(apart.address);
-                        apartmentPrice.setText(apart.price);
+                        apartmentPrice.setText(Integer.toString(apart.price));
                     }
 
                     @Override
