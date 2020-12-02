@@ -42,20 +42,16 @@ public class FindApartmentUser extends AppCompatActivity {
     public String apartID;
     private DatabaseReference myRef;
     private StorageReference storageRef;
+    private FirebaseAuth mAuth;
 
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_findapartment);
-        final Button like = findViewById(R.id.like);
-        final Button dislike = findViewById(R.id.dislike);
-        final Button design = findViewById(R.id.design);
         final TextView yourName = findViewById(R.id.yourName);
-        Toast.makeText(getApplicationContext(), "fuck maccabi", Toast.LENGTH_LONG).show();
-        final TaskCompletionSource<List<String>> tcs = new TaskCompletionSource<>();
         List <String> allApartments = new ArrayList<String>();
 
-        FirebaseAuth mAuth;
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("");
         mAuth = FirebaseAuth.getInstance();
@@ -70,14 +66,13 @@ public class FindApartmentUser extends AppCompatActivity {
                 for (DataSnapshot s : snapshot.getChildren()){
                     try {
                         allApartments.add(s.getKey());
-                        Toast.makeText(getApplicationContext(), "added", Toast.LENGTH_LONG).show();
                     }
                     catch (Exception e){
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                     }
-                    //Toast.makeText(getApplicationContext(), s.getKey(), Toast.LENGTH_LONG).show();
                 }
-                tcs.setResult(allApartments);
+
+                check(allApartments);
             }
 
             @Override
@@ -86,30 +81,49 @@ public class FindApartmentUser extends AppCompatActivity {
             }
         });
 
-        Task<List<String>> t = tcs.getTask();
-
-        try {
-            Tasks.await(t);
-        } catch (ExecutionException | InterruptedException e) {
-            t = Tasks.forException(e);
-        }
-
-        if(t.isSuccessful()) {
-            List<String> result = t.getResult();
-        }
-        else{
-            Toast.makeText(getApplicationContext(), "kaboom", Toast.LENGTH_LONG).show();
-        }
+    }
 
 
-        if (allApartments.isEmpty())
-            Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_LONG).show();
+    private void loadData(String ID){
+        Toast.makeText(getApplicationContext(), ID, Toast.LENGTH_LONG).show();
+        final TextView addressInImg = findViewById(R.id.addressInImg);
+        final TextView nameInImg = findViewById(R.id.nameInImg);
+        final TextView descriptionInImg = findViewById(R.id.descriptionInImg);
+        final TextView apartmentPrice = findViewById(R.id.price);
+        storageRef.child("images/"+ ID +"/firstIm").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        // Use the bytes to display the image
+                        final ImageView apaImage = findViewById(R.id.midImage);
+                        apaImage.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+                    }
+                }).addOnFailureListener(new OnFailureListener() {@Override public void onFailure(@NonNull Exception exception) {Toast.makeText(getApplicationContext(), exception.toString(), Toast.LENGTH_LONG).show(); }});
 
-        Iterator<String> appartmentsIterator = allApartments.iterator();
-        if (appartmentsIterator.hasNext()){
-            Toast.makeText(getApplicationContext(), "work", Toast.LENGTH_LONG).show();
-        }
-        //loadData(appartmentsIterator.next());
+                myRef.child("apartment").child(ID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        apart = snapshot.getValue(Apartment.class);
+                        descriptionInImg.setText(apart.desc);
+                        nameInImg.setText(apart.name);
+                        addressInImg.setText(apart.address);
+                        apartmentPrice.setText(apart.price);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(getApplicationContext(), "can't load apartment", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+    }
+
+    private void check (List<String> apartments){
+        final Button like = findViewById(R.id.like);
+        final Button dislike = findViewById(R.id.dislike);
+        final Button design = findViewById(R.id.design);
+
+        Iterator<String> appartmentsIterator = apartments.iterator();
+        loadData(appartmentsIterator.next());
 
         like.setOnClickListener(new View.OnClickListener()
         {
@@ -131,19 +145,13 @@ public class FindApartmentUser extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //just skip the picture and keep going to the next apartment
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        //should go to the chat with the manager
-                        String username = snapshot.child("ownerID").getValue().toString();
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                if (appartmentsIterator.hasNext()){
+                    apartID = appartmentsIterator.next();
+                    loadData(apartID);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "no more apartments", Toast.LENGTH_LONG).show();
+                }
             }
         });
         design.setOnClickListener(new View.OnClickListener()
@@ -156,37 +164,4 @@ public class FindApartmentUser extends AppCompatActivity {
             }
         });
     }
-
-
-    private void loadData(String ID){
-        final TextView addressInImg = findViewById(R.id.addressInImg);
-        final TextView nameInImg = findViewById(R.id.nameInImg);
-        final TextView descriptionInImg = findViewById(R.id.descriptionInImg);
-        final TextView apartmentPrice = findViewById(R.id.price);
-        storageRef.child("images/"+ ID +"/firstIm").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        // Use the bytes to display the image
-                        final ImageView apaImage = findViewById(R.id.midImage);
-                        apaImage.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
-                    }
-                }).addOnFailureListener(new OnFailureListener() {@Override public void onFailure(@NonNull Exception exception) {Toast.makeText(getApplicationContext(), exception.toString(), Toast.LENGTH_LONG).show(); }});
-
-                myRef.child("apartment").child(ID).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        apart = snapshot.getValue(Apartment.class);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(getApplicationContext(), "can't load apartment", Toast.LENGTH_LONG).show();
-                    }
-                });
-                descriptionInImg.setText(apart.desc);
-                nameInImg.setText(apart.name);
-                addressInImg.setText(apart.address);
-                apartmentPrice.setText(apart.price);
-                }
-
 }
