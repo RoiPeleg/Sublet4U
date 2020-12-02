@@ -2,6 +2,7 @@ package com.example.sublet4u.customer;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -85,35 +86,36 @@ public class FindApartmentUser extends AppCompatActivity {
 
 
     private void loadData(String ID){
-        Toast.makeText(getApplicationContext(), ID, Toast.LENGTH_LONG).show();
         final TextView addressInImg = findViewById(R.id.addressInImg);
         final TextView nameInImg = findViewById(R.id.nameInImg);
         final TextView descriptionInImg = findViewById(R.id.descriptionInImg);
         final TextView apartmentPrice = findViewById(R.id.price);
+        final ImageView apaImage = findViewById(R.id.midImage);
+
         storageRef.child("images/"+ ID +"/firstIm").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
                     public void onSuccess(byte[] bytes) {
                         // Use the bytes to display the image
-                        final ImageView apaImage = findViewById(R.id.midImage);
                         apaImage.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
-                    }
-                }).addOnFailureListener(new OnFailureListener() {@Override public void onFailure(@NonNull Exception exception) {Toast.makeText(getApplicationContext(), exception.toString(), Toast.LENGTH_LONG).show(); }});
+                        Toast.makeText(getApplicationContext(),"new image",Toast.LENGTH_LONG).show();
+                        myRef.child("apartment").child(ID).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                apart = snapshot.getValue(Apartment.class);
+                                descriptionInImg.setText(apart.desc);
+                                nameInImg.setText(apart.name);
+                                addressInImg.setText(apart.address);
+                                apartmentPrice.setText(Integer.toString(apart.price));
+                            }
 
-                myRef.child("apartment").child(ID).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        apart = snapshot.getValue(Apartment.class);
-                        descriptionInImg.setText(apart.desc);
-                        nameInImg.setText(apart.name);
-                        addressInImg.setText(apart.address);
-                        apartmentPrice.setText(Integer.toString(apart.price));
-                    }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(getApplicationContext(), "can't load apartment", Toast.LENGTH_LONG).show();
+                            }
+                        });
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(getApplicationContext(), "can't load apartment", Toast.LENGTH_LONG).show();
                     }
-                });
+                }).addOnFailureListener(new OnFailureListener() {@Override public void onFailure(@NonNull Exception exception) {Toast.makeText(getApplicationContext(), "image failed "+exception.toString(), Toast.LENGTH_LONG).show(); }});
 
     }
 
