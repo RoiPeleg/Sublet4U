@@ -56,10 +56,13 @@
         android:id="@+id/done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="396dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="292dp"
         android:text="Done"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/address"
-        tools:layout_editor_absoluteX="159dp" />
+        app:layout_constraintVertical_bias="0.504" />
 
     <Button
         android:id="@+id/photos"
