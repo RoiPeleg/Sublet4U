@@ -19,35 +19,38 @@
         android:id="@+id/Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="92dp"
         android:ems="10"
         android:hint="Name"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toTopOf="@+id/textView"
-        tools:layout_editor_absoluteX="36dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
 
     <EditText
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Description"
         android:inputType="textMultiLine"
-        app:layout_constraintTop_toBottomOf="@+id/Name"
-        tools:layout_editor_absoluteX="36dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Name" />
 
     <EditText
         android:id="@+id/address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="63dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="64dp"
         android:ems="10"
         android:hint="address"
         android:inputType="textPostalAddress"
-        app:layout_constraintTop_toTopOf="@+id/description"
-        tools:layout_editor_absoluteX="35dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/description" />
 
     <Button
         android:id="@+id/done"
@@ -78,5 +81,18 @@
         app:layout_constraintTop_toBottomOf="@+id/photos"
         app:layout_constraintVertical_bias="0.074"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <EditText
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:ems="10"
+        android:hint="price"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/done"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.19" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

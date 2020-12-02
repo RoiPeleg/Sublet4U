@@ -13,13 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sublet4u.R;
-import com.example.sublet4u.data.model.Aparetment;
+import com.example.sublet4u.data.model.Apartment;
 import com.example.sublet4u.data.model.Invitation;
 import com.example.sublet4u.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +31,7 @@ import com.google.firebase.storage.StorageReference;
 public class FindApartmentUser extends AppCompatActivity
 {
     DatabaseReference reference;
-    public Aparetment apart;
+    public Apartment apart;
     public String apartID;
 
     protected void onCreate(Bundle savedInstanceState)
@@ -71,7 +70,7 @@ public class FindApartmentUser extends AppCompatActivity
                     }
                 }).addOnFailureListener(new OnFailureListener() {@Override public void onFailure(@NonNull Exception exception) {Toast.makeText(getApplicationContext(), exception.toString(), Toast.LENGTH_LONG).show(); }});
 
-                     apart = s.getValue(Aparetment.class);
+                     apart = s.getValue(Apartment.class);
                 descriptionInImg.setText(apart.desc);
                 nameInImg.setText(apart.name);
                 addressInImg.setText(apart.address);

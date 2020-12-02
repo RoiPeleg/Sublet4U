@@ -9,7 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.sublet4u.R;
-import com.example.sublet4u.data.model.Aparetment;
+import com.example.sublet4u.data.model.Apartment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +45,7 @@ public class addapartmentActivity extends AppCompatActivity {
         final EditText name = findViewById(R.id.Name);
         final EditText desc = findViewById(R.id.description);
         final EditText address = findViewById(R.id.address);
+        final EditText price = findViewById(R.id.price);
         imageView = findViewById(R.id.imageView);
         FirebaseAuth mAuth;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -57,7 +58,7 @@ public class addapartmentActivity extends AppCompatActivity {
             public void onClick(View v) {
                  String ap_id = myRef.child("apartment").push().getKey();
 
-                myRef.child("apartment").child(ap_id).setValue(new Aparetment(name.getText().toString(),desc.getText().toString(),address.getText().toString(), mAuth.getCurrentUser().getUid()));
+                myRef.child("apartment").child(ap_id).setValue(new Apartment(name.getText().toString(),desc.getText().toString(),address.getText().toString(), mAuth.getCurrentUser().getUid(),  Integer. parseInt(price.getText().toString())));
                 Uri file = Uri.fromFile(new File(picturePath));
                 StorageReference riversRef = storageRef.child("images/").child(ap_id+"").child("firstIm");
                 UploadTask  uploadTask = riversRef.putFile(file);
