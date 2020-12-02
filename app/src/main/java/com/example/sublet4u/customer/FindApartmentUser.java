@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sublet4u.R;
@@ -28,11 +29,18 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class FindApartmentUser extends AppCompatActivity
-{
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+public class FindApartmentUser extends AppCompatActivity {
     DatabaseReference reference;
     public Apartment apart;
     public String apartID;
+    private DatabaseReference myRef;
+    private StorageReference storageRef;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -41,70 +49,59 @@ public class FindApartmentUser extends AppCompatActivity
         final Button like = findViewById(R.id.like);
         final Button dislike = findViewById(R.id.dislike);
         final Button design = findViewById(R.id.design);
-        final ImageView apaImage = findViewById(R.id.midImage);
-        final TextView descriptionInImg = findViewById(R.id.descriptionInImg);
-        final TextView addressInImg = findViewById(R.id.addressInImg);
-        final TextView nameInImg = findViewById(R.id.nameInImg);
         final TextView yourName = findViewById(R.id.yourName);
+        List <String> allApartments = new ArrayList<String>();
 
-
-//        imageView = findViewById(R.id.imageView);
         FirebaseAuth mAuth;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("");
+        myRef = database.getReference("");
         mAuth = FirebaseAuth.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
+        storageRef = storage.getReference();
         yourName.setText(mAuth.getCurrentUser().getDisplayName());
         Query listApartment = myRef.child("apartment").orderByValue();
-        listApartment.limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
+        listApartment.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot s : snapshot.getChildren()) {
-                    Toast.makeText(getApplicationContext(),s.getKey(),Toast.LENGTH_LONG).show();
-                    storageRef.child("images/"+ s.getKey() +"/firstIm").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        // Use the bytes to display the image
-                        apaImage.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+                for (DataSnapshot s : snapshot.getChildren()){
+                    try {
+                        allApartments.add(s.getKey());
+                        Toast.makeText(getApplicationContext(), "added", Toast.LENGTH_LONG).show();
                     }
-                }).addOnFailureListener(new OnFailureListener() {@Override public void onFailure(@NonNull Exception exception) {Toast.makeText(getApplicationContext(), exception.toString(), Toast.LENGTH_LONG).show(); }});
-
-                     apart = s.getValue(Apartment.class);
-                descriptionInImg.setText(apart.desc);
-                nameInImg.setText(apart.name);
-                addressInImg.setText(apart.address);
-                apartID = s.getKey();
+                    catch (Exception e){
+                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                    }
+                    //Toast.makeText(getApplicationContext(), s.getKey(), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "unalbe to load data", Toast.LENGTH_LONG).show();
             }
         });
+        if (allApartments.isEmpty())
+            Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_LONG).show();
 
+        Iterator<String> appartmentsIterator = allApartments.iterator();
+        if (appartmentsIterator.hasNext()){
+            Toast.makeText(getApplicationContext(), "work", Toast.LENGTH_LONG).show();
+        }
+        //loadData(appartmentsIterator.next());
 
-        int i = 2;
         like.setOnClickListener(new View.OnClickListener()
         {
 
             public void onClick(View v){
                 String invitation_id = myRef.child("Invitations").push().getKey();
                 myRef.child("Invitations").child(invitation_id).setValue(new Invitation(apartID, mAuth.getUid()));
-                listApartment.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot s : snapshot.getChildren()){
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                if (appartmentsIterator.hasNext()){
+                    apartID = appartmentsIterator.next();
+                    loadData(apartID);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "no more apartments", Toast.LENGTH_LONG).show();
+                }
             }
 
         });
@@ -139,5 +136,35 @@ public class FindApartmentUser extends AppCompatActivity
     }
 
 
+    private void loadData(String ID){
+        final TextView addressInImg = findViewById(R.id.addressInImg);
+        final TextView nameInImg = findViewById(R.id.nameInImg);
+        final TextView descriptionInImg = findViewById(R.id.descriptionInImg);
+        final TextView apartmentPrice = findViewById(R.id.price);
+        storageRef.child("images/"+ ID +"/firstIm").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        // Use the bytes to display the image
+                        final ImageView apaImage = findViewById(R.id.midImage);
+                        apaImage.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+                    }
+                }).addOnFailureListener(new OnFailureListener() {@Override public void onFailure(@NonNull Exception exception) {Toast.makeText(getApplicationContext(), exception.toString(), Toast.LENGTH_LONG).show(); }});
+
+                myRef.child("apartment").child(ID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        apart = snapshot.getValue(Apartment.class);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(getApplicationContext(), "can't load apartment", Toast.LENGTH_LONG).show();
+                    }
+                });
+                descriptionInImg.setText(apart.desc);
+                nameInImg.setText(apart.name);
+                addressInImg.setText(apart.address);
+                apartmentPrice.setText(apart.price);
+                }
 
 }
