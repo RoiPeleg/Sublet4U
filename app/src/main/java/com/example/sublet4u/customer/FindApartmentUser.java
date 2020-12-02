@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sublet4u.R;
@@ -19,6 +18,9 @@ import com.example.sublet4u.data.model.Invitation;
 import com.example.sublet4u.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,10 +32,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
+import java.util.concurrent.ExecutionException;
 
 public class FindApartmentUser extends AppCompatActivity {
     DatabaseReference reference;
@@ -50,6 +51,8 @@ public class FindApartmentUser extends AppCompatActivity {
         final Button dislike = findViewById(R.id.dislike);
         final Button design = findViewById(R.id.design);
         final TextView yourName = findViewById(R.id.yourName);
+        Toast.makeText(getApplicationContext(), "fuck maccabi", Toast.LENGTH_LONG).show();
+        final TaskCompletionSource<List<String>> tcs = new TaskCompletionSource<>();
         List <String> allApartments = new ArrayList<String>();
 
         FirebaseAuth mAuth;
@@ -63,6 +66,7 @@ public class FindApartmentUser extends AppCompatActivity {
         listApartment.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 for (DataSnapshot s : snapshot.getChildren()){
                     try {
                         allApartments.add(s.getKey());
@@ -73,6 +77,7 @@ public class FindApartmentUser extends AppCompatActivity {
                     }
                     //Toast.makeText(getApplicationContext(), s.getKey(), Toast.LENGTH_LONG).show();
                 }
+                tcs.setResult(allApartments);
             }
 
             @Override
@@ -80,6 +85,23 @@ public class FindApartmentUser extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "unalbe to load data", Toast.LENGTH_LONG).show();
             }
         });
+
+        Task<List<String>> t = tcs.getTask();
+
+        try {
+            Tasks.await(t);
+        } catch (ExecutionException | InterruptedException e) {
+            t = Tasks.forException(e);
+        }
+
+        if(t.isSuccessful()) {
+            List<String> result = t.getResult();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "kaboom", Toast.LENGTH_LONG).show();
+        }
+
+
         if (allApartments.isEmpty())
             Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_LONG).show();
 
