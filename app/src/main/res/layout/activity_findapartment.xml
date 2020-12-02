@@ -7,16 +7,16 @@
 
     <Button
         android:id="@+id/dislike"
-        android:layout_width="168dp"
-        android:layout_height="84dp"
+        android:layout_width="150dp"
+        android:layout_height="69dp"
         android:text="@string/dislike"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/like"
-        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintHorizontal_bias="0.464"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.922" />
+        app:layout_constraintVertical_bias="0.901" />
 
     <Button
         android:id="@+id/like"
@@ -50,18 +50,18 @@
 
     <ImageView
         android:id="@+id/midImage"
-        android:layout_width="289dp"
-        android:layout_height="601dp"
+        android:layout_width="230dp"
+        android:layout_height="316dp"
         android:layout_marginStart="62dp"
-        android:layout_marginTop="139dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="74dp"
-        android:layout_marginBottom="218dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.535"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95"
+        app:layout_constraintVertical_bias="0.143"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -69,28 +69,31 @@
         android:layout_width="134dp"
         android:layout_height="26dp"
         android:layout_marginStart="82dp"
-        android:layout_marginTop="386dp"
         android:layout_marginEnd="195dp"
         android:layout_marginBottom="319dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/midImage"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/addressInImg"
         android:layout_width="133dp"
         android:layout_height="27dp"
         android:layout_marginStart="81dp"
-        android:layout_marginTop="427dp"
+        android:layout_marginTop="41dp"
         android:layout_marginEnd="197dp"
         android:layout_marginBottom="277dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/nameInImg"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/descriptionInImg"
@@ -123,15 +126,14 @@
         android:layout_width="134dp"
         android:layout_height="31dp"
         android:layout_marginStart="80dp"
-        android:layout_marginTop="462dp"
         android:layout_marginEnd="197dp"
         android:layout_marginBottom="238dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/addressInImg"
         app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
