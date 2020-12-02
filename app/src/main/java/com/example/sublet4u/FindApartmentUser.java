@@ -96,7 +96,7 @@ public class FindApartmentUser extends AppCompatActivity
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot s : snapshot.getChildren()){
-                            
+
                         }
                     }
 
