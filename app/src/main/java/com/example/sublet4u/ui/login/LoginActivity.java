@@ -58,13 +58,12 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         // ...
         // Initialize Firebase Auth
-
+        loginButton.setEnabled(true);
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser() != null)
             mAuth.signOut();
         DatabaseReference myRef = database.getReference("");
         registerButton.setEnabled(true);
-
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -78,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+
             }
         };
         usernameEditText.addTextChangedListener(afterTextChangedListener);
@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-
+                    loginButton.setEnabled(true);
                 }
                 return false;
             }
@@ -96,7 +96,6 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                loadingProgressBar.setVisibility(View.VISIBLE);
                 mAuth.signInWithEmailAndPassword(usernameEditText.getText().toString().trim(), passwordEditText.getText().toString().trim())
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
