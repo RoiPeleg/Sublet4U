@@ -1,4 +1,4 @@
-package com.example.sublet4u;
+package com.example.sublet4u.customer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sublet4u.R;
 import com.example.sublet4u.customer.FindApartmentUser;
 import com.example.sublet4u.data.model.Apartment;
 import com.example.sublet4u.data.model.Client;
