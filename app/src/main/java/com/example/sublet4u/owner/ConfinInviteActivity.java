@@ -50,9 +50,12 @@ public class ConfinInviteActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
+        Bundle bundle = getIntent().getExtras();
         Intent receivedIntent  = getIntent();
-        String ID = receivedIntent.getAction();
-        Toast.makeText(getApplicationContext(), ID, Toast.LENGTH_LONG).show();
+        String ID = receivedIntent.getStringExtra("clientID");
+//        Toast.makeText(getApplicationContext(), t, Toast.LENGTH_LONG).show();
+
+
 //        String hello = myRef.child("client").child("client").child(ID);
 
         loadData(ID);

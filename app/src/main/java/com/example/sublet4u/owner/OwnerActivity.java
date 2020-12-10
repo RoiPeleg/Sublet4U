@@ -1,5 +1,6 @@
 package com.example.sublet4u.owner;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -50,21 +51,16 @@ public class OwnerActivity extends AppCompatActivity {
         Query clientList = myRef.child("client").orderByChild("clienID");
         myRef.child("apartment").orderByChild("ownerID").equalTo(mAuth.getCurrentUser().getUid());
         Query ownerApa = myRef.child("apartment").orderByChild("ownerID");
-        Toast.makeText(getApplicationContext(), mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
 //        .orderByChild("ownerID").equalTo(String.valueOf(ownerApa.startAt(mAuth.getCurrentUser().getUid())))
         ownerApa.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot s : snapshot.getChildren()){
-//                    Log.d(s.getKey(), "hello");
-//                        Toast.makeText(getApplicationContext(), (CharSequence) s.child("ownerID").getValue(), Toast.LENGTH_LONG).show();
-//                        Toast.makeText(getApplicationContext(), mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
                     if (s.child("ownerID").getValue().equals(mAuth.getCurrentUser().getUid()))
                     {
-//                                Toast.makeText(getApplicationContext(), s.getKey(), Toast.LENGTH_LONG).show();
                         allApartment.add(s.getKey());
-//                            Toast.makeText(getApplicationContext(), allApartment.get(0), Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -73,26 +69,29 @@ public class OwnerActivity extends AppCompatActivity {
                 {
                     int j = 0;
                     // Populate view as needed
+                    @SuppressLint("SetTextI18n")
                     @Override
                     protected void populateView(View view, Invitation invitation, int position)
                     {
-                        for (int i = 0; i < allApartment.size(); i++) {
-                            if (invitation.getApartmentID().equals(allApartment.get(i)))
-                            {
+//                        for (int i = 0; i < allApartment.size(); i++) {
+//                            if (invitation.getApartmentID().equals(allApartment.get(i)))
+//                            {
+
                                 ((TextView) view.findViewById(android.R.id.text1)).setText(invitation.getClientID() + " ClientId");
                                 ((TextView) view.findViewById(android.R.id.text2)).setText(invitation.getApartmentID() + " ApartmentId");
-//                                (Button)    view.findViewById(android.R.id.text1).;
                                 mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         Intent i = new Intent(OwnerActivity.this, ConfinInviteActivity.class);
+
                                         i.putExtra("clientID", invitation.getClientID());
+                                        Toast.makeText(getApplicationContext(), invitation.getClientID(), Toast.LENGTH_LONG).show();
                                         startActivity(i);
                                     }
                                 });
-                                break;
-                            }
-                        }
+//                                break;
+//                            }
+//                        }
                     }
                 });
 
