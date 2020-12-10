@@ -39,4 +39,9 @@ public class Client
     public String getClientID() {
         return clientID;
     }
+
+    public String getName()
+    {
+        return this.name;
+    }
 }
