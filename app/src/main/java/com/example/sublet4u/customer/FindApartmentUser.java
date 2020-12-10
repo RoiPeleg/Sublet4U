@@ -161,7 +161,7 @@ public class FindApartmentUser extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //just skip the picture and keep going to the next apartment
-                Intent i = new Intent(new Intent(getApplicationContext(), LoginActivity.class));
+                Intent i = new Intent(new Intent(getApplicationContext(), ProfileActivity.class));
                 startActivity(i);
             }
         });

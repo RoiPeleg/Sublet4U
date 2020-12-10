@@ -1,4 +1,4 @@
-package com.example.sublet4u;
+package com.example.sublet4u.customer;
 
 import android.Manifest;
 import android.content.Intent;

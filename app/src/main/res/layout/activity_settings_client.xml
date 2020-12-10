@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#0009ff"
     tools:context=".SettingsClientActivity">
 
     <Button
@@ -12,101 +13,100 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="38dp"
         android:layout_marginTop="42dp"
-        android:layout_marginEnd="280dp"
-        android:layout_marginBottom="641dp"
         android:text="Back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/clientPic"
         android:layout_width="173dp"
         android:layout_height="182dp"
-        android:layout_marginStart="129dp"
-        android:layout_marginTop="114dp"
-        android:layout_marginEnd="109dp"
-        android:layout_marginBottom="435dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.453"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.198"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
         android:id="@+id/addPics"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="149dp"
-        android:layout_marginTop="318dp"
-        android:layout_marginEnd="130dp"
         android:layout_marginBottom="365dp"
         android:text="Add Picture"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.462"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.965" />
 
     <EditText
         android:id="@+id/clientName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="51dp"
-        android:layout_marginTop="388dp"
-        android:layout_marginEnd="150dp"
-        android:layout_marginBottom="298dp"
+        android:layout_width="240dp"
+        android:layout_height="30dp"
+        android:background="@color/white"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:text=" Name"
+        android:textColor="#0009ff"
+        android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.327"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.54" />
 
     <EditText
         android:id="@+id/clientSex"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="53dp"
-        android:layout_marginTop="456dp"
-        android:layout_marginEnd="148dp"
-        android:layout_marginBottom="230dp"
+        android:layout_width="240dp"
+        android:layout_height="30dp"
+        android:background="@color/white"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="your sex"
+        android:text=" Sex"
+        android:textColor="#0009ff"
+        android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.327"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.597" />
 
     <EditText
         android:id="@+id/clientDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="529dp"
-        android:layout_marginEnd="146dp"
-        android:layout_marginBottom="157dp"
+        android:layout_width="240dp"
+        android:layout_height="140dp"
+        android:background="@color/white"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Description"
+        android:text=" Description"
+        android:textColor="#0009ff"
+        android:textSize="24dp"
+        android:gravity="top"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.327"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.773" />
 
     <Button
         android:id="@+id/update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="613dp"
-        android:layout_marginEnd="159dp"
-        android:layout_marginBottom="70dp"
         android:text="Update"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.443"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.891" />
 </androidx.constraintlayout.widget.ConstraintLayout>
