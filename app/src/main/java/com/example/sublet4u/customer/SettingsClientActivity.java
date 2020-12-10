@@ -1,4 +1,4 @@
-package com.example.sublet4u.customer;
+package com.example.sublet4u;
 
 import android.Manifest;
 import android.content.Intent;
@@ -60,7 +60,7 @@ public class SettingsClientActivity extends AppCompatActivity
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String client_id = myRef.child("client").child(mAuth.getUid());
+                String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
 //                myRef.child("client").child(client_id)
                 myRef.child("client").child(client_id).setValue(new Client(name.getText().toString(), desc.getText().toString(),
                         mAuth.getCurrentUser().getUid(), sex.getText().toString()));
