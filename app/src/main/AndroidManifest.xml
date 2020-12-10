@@ -15,6 +15,16 @@
             android:theme="@style/Theme.Sublet4U.NoActionBar" />
 
         <activity
+            android:name=".customer.SettingsClientActivity"
+            android:label="SettingClientActivity"
+            android:theme="@style/Theme.Sublet4U.NoActionBar" />
+
+        <activity
+            android:name=".customer.ProfileActivity"
+            android:label="ProfileActivity"
+            android:theme="@style/Theme.Sublet4U.NoActionBar" />
+
+        <activity
             android:name=".customer.FindApartmentUser"
             android:label="FindApartmentUser"
             android:theme="@style/Theme.Sublet4U.NoActionBar" />

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0009ff"
-    tools:context=".ProfileActivity">
+    tools:context=".customer.ProfileActivity">
 
     <ImageView
         android:id="@+id/profileImg"
@@ -22,14 +22,13 @@
         android:id="@+id/settings"
         android:layout_width="133dp"
         android:layout_height="53dp"
-        android:layout_marginTop="49dp"
         android:text="settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.841"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.009" />
+        app:layout_constraintVertical_bias="0.081" />
 
     <Button
         android:id="@+id/back"
@@ -47,32 +46,32 @@
         android:id="@+id/viewName"
         android:layout_width="240dp"
         android:layout_height="30dp"
-        android:text=" Name"
         android:background="@color/white"
+        android:text=" Name"
         android:textColor="#0009ff"
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.352"
+        app:layout_constraintHorizontal_bias="0.356"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.526" />
 
     <TextView
         android:id="@+id/viewSex"
         android:layout_width="240dp"
         android:layout_height="30dp"
         android:layout_marginBottom="217dp"
-        android:text="Sex"
         android:background="@color/white"
+        android:text="Sex"
         android:textColor="#0009ff"
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.345"
+        app:layout_constraintHorizontal_bias="0.35"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.811" />
+        app:layout_constraintTop_toBottomOf="@+id/viewName"
+        app:layout_constraintVertical_bias="0.335" />
 
     <TextView
         android:id="@+id/viewDesc"
@@ -84,8 +83,8 @@
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.356"
+        app:layout_constraintHorizontal_bias="0.35"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.746" />
+        app:layout_constraintVertical_bias="0.862" />
 </androidx.constraintlayout.widget.ConstraintLayout>
