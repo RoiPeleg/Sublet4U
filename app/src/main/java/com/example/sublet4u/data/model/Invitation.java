@@ -14,4 +14,13 @@ public class Invitation {
         this.apartmentID = apartmentID;
         this.clientID = clientID;
     }
+
+    public String getClientID()
+    {
+        return this.clientID;
+    }
+
+    public String getApartmentID() {
+        return this.apartmentID;
+    }
 }
