@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sublet4u">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,21 +11,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sublet4U">
+        <activity android:name=".customer.ClientInBoxActivity"></activity>
+        <activity
+            android:name=".owner.ConfinInviteActivity"
+            android:label="confirmInvite"
+            android:theme="@style/Theme.Sublet4U.NoActionBar" />
         <activity
             android:name=".owner.addapartmentActivity"
             android:label="@string/title_activity_addapartment"
             android:theme="@style/Theme.Sublet4U.NoActionBar" />
-
         <activity
             android:name=".customer.SettingsClientActivity"
             android:label="SettingClientActivity"
             android:theme="@style/Theme.Sublet4U.NoActionBar" />
-
         <activity
             android:name=".customer.ProfileActivity"
             android:label="ProfileActivity"
             android:theme="@style/Theme.Sublet4U.NoActionBar" />
-
         <activity
             android:name=".customer.FindApartmentUser"
             android:label="FindApartmentUser"
@@ -45,7 +49,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

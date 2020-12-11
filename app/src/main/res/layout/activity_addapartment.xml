@@ -12,13 +12,14 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:gravity="center"
         android:text="Add a new apartment"
         android:textColor="@color/white"
         android:textSize="30dp"
-        tools:layout_editor_absoluteX="61dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/Name"
@@ -31,6 +32,7 @@
         android:textColor="#0009ff"
         android:ems="10"
         android:hint=" Name"
+        android:maxLength="20"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView" />
@@ -45,6 +47,7 @@
         android:ems="10"
         android:gravity="start|top"
         android:hint=" Description"
+        android:maxLength="50"
         android:inputType="textMultiLine"
         android:textColor="#0009ff"
         android:textColorHint="#0009ff"
@@ -60,6 +63,7 @@
         android:background="@color/white"
         android:ems="10"
         android:hint=" Address"
+        android:maxLength="30"
         android:inputType="textPostalAddress"
         android:textColor="#0009ff"
         android:textColorHint="#0009ff"
@@ -109,6 +113,7 @@
         android:textColor="#0009ff"
         android:ems="10"
         android:hint=" Price"
+        android:maxLength="7"
         android:inputType="number"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/done"

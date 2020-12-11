@@ -50,6 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
 //        Toast.makeText(getApplicationContext(), "hello", Toast.LENGTH_LONG).show();
         final Button back = findViewById(R.id.back);
         final Button settings = findViewById(R.id.settings);
+        final Button inbox = findViewById(R.id.inbox);
 
         List <String> allClients = new ArrayList<String>();
 
@@ -82,8 +83,13 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-
+        inbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(new Intent(getApplicationContext(), ClientInBoxActivity.class));
+                startActivity(i);
+            }
+        });
 
 
 

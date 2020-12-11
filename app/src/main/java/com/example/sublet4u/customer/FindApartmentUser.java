@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,13 +46,17 @@ public class FindApartmentUser extends AppCompatActivity {
     private StorageReference storageRef;
     private FirebaseAuth mAuth;
 
+    public String arriveDate, leaveDate;
+    int p=0;
+
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_findapartment);
         final TextView yourName = findViewById(R.id.yourName);
         List <String> allApartments = new ArrayList<String>();
-
+        CalendarView arrive = findViewById(R.id.arriveDate);
+        CalendarView leave = findViewById(R.id.leaveDate);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("");
@@ -82,6 +87,40 @@ public class FindApartmentUser extends AppCompatActivity {
             }
         });
 
+        arrive.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
+                String int_day_tostring = "" + day;
+                String int_month_tostring = ""+ (month+1);
+
+                if (int_day_tostring.length() < 2)
+                    arriveDate = "0"+day+".";
+                else
+                    arriveDate = day + ".";
+                if (int_month_tostring.length() < 2)
+                    arriveDate = arriveDate+"0"+(month+1)+"."+year;
+                else
+                    arriveDate = arriveDate+(month+1)+"."+year;
+            }
+        });
+
+        leave.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
+                String int_day_tostring = "" + day;
+                String int_month_tostring = ""+ (month+1);
+
+                if (int_day_tostring.length() < 2)
+                    leaveDate = "0"+day+".";
+                else
+                    leaveDate = day + ".";
+                if (int_month_tostring.length() < 2)
+                    leaveDate = leaveDate+"0"+(month+1)+"."+year;
+                else
+                    leaveDate = leaveDate+(month+1)+"."+year;
+            }
+        });
+
     }
 
 
@@ -106,6 +145,7 @@ public class FindApartmentUser extends AppCompatActivity {
                                 nameInImg.setText(apart.name);
                                 addressInImg.setText(apart.address);
                                 apartmentPrice.setText(Integer.toString(apart.price));
+                                p = apart.price;
                             }
 
                             @Override
@@ -125,14 +165,15 @@ public class FindApartmentUser extends AppCompatActivity {
         final Button design = findViewById(R.id.design);
 
         Iterator<String> appartmentsIterator = apartments.iterator();
-        loadData(appartmentsIterator.next());
+        apartID = appartmentsIterator.next();
+        loadData(apartID);
 
         like.setOnClickListener(new View.OnClickListener()
         {
-
             public void onClick(View v){
                 String invitation_id = myRef.child("Invitations").push().getKey();
-                myRef.child("Invitations").child(invitation_id).setValue(new Invitation(apartID, mAuth.getUid()));
+                System.out.println(apartID);
+                myRef.child("Invitations").child(invitation_id).setValue(new Invitation(apartID, mAuth.getUid(), arriveDate, leaveDate, p, mAuth.getCurrentUser().getDisplayName(),apart.name));
                 if (appartmentsIterator.hasNext()){
                     apartID = appartmentsIterator.next();
                     loadData(apartID);
@@ -141,7 +182,6 @@ public class FindApartmentUser extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "no more apartments", Toast.LENGTH_LONG).show();
                 }
             }
-
         });
         dislike.setOnClickListener(new View.OnClickListener() {
             @Override
