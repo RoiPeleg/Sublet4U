@@ -19,11 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.sublet4u.R;
-import com.example.sublet4u.customer.FindApartmentUser;
-import com.example.sublet4u.data.model.Apartment;
-import com.example.sublet4u.data.model.Client;
-import com.example.sublet4u.owner.OwnerActivity;
-import com.example.sublet4u.owner.addapartmentActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,7 +40,10 @@ public class SettingsClientActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_client);
         final Button back = findViewById(R.id.goBack);
-        final Button update = findViewById(R.id.update);
+        final Button updateDesc = findViewById(R.id.updateDesc);
+        final Button updateSex = findViewById(R.id.updateSex);
+        final Button updateName = findViewById(R.id.updateName);
+        final Button updateImg = findViewById(R.id.updateImg);
         final Button addPics = findViewById(R.id.addPics);
         final EditText name = findViewById(R.id.clientName);
         final EditText desc = findViewById(R.id.clientDesc);
@@ -57,32 +55,76 @@ public class SettingsClientActivity extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
-        update.setOnClickListener(new View.OnClickListener() {
+        String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
+        myRef.child("client").child(client_id).child("clientID").setValue(client_id);
+        updateDesc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
-//                myRef.child("client").child(client_id)
-                myRef.child("client").child(client_id).setValue(new Client(name.getText().toString(), desc.getText().toString(),
-                        mAuth.getCurrentUser().getUid(), sex.getText().toString()));
-                Uri file = Uri.fromFile(new File(picturePath));
-                StorageReference riversRef = storageRef.child("imagesClient/").child(client_id+"").child("/firstIm");
-                UploadTask uploadTask = riversRef.putFile(file);
+                if (!(desc.getText().toString().equals("")))
+                {
+                    String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
+                    myRef.child("client").child(client_id).child("desc").setValue(desc.getText().toString());
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"you can't enter nothing",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        updateSex.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!(sex.getText().toString().equals("")))
+                {
+                    String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
+                    myRef.child("client").child(client_id).child("sex").setValue(sex.getText().toString());
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"you can't enter nothing",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        updateName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!(name.getText().toString().equals("")))
+                {
+                    String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
+                    myRef.child("client").child(client_id).child("name").setValue(name.getText().toString());
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"you can't enter nothing",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        updateImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (picturePath != null) {
+                    String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
+                    Uri file = Uri.fromFile(new File(picturePath));
+                    StorageReference riversRef = storageRef.child("imagesClient/").child(client_id+"").child("/firstIm");
+                    UploadTask uploadTask = riversRef.putFile(file);
 
-                // Register observers to listen for when the download is done or if it fails
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        Toast.makeText(getApplicationContext(),"Upload Failed",Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                        Toast.makeText(getApplicationContext(),"Upload Successful",Toast.LENGTH_SHORT).show();
-                    }});
-
-                Intent i = new Intent(new Intent(getApplicationContext(), FindApartmentUser.class));
-                startActivity(i);
+                    // Register observers to listen for when the download is done or if it fails
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(getApplicationContext(),"Upload Failed",Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                            Toast.makeText(getApplicationContext(),"Upload Successful",Toast.LENGTH_SHORT).show();
+                        }});
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"you can't enter nothing",Toast.LENGTH_SHORT).show();
+                }
             }
         });
         addPics.setOnClickListener(new View.OnClickListener() {
@@ -104,8 +146,9 @@ public class SettingsClientActivity extends AppCompatActivity
         });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent i = new Intent(new Intent(getApplicationContext(), FindApartmentUser.class));
+            public void onClick(View v)
+            {
+                Intent i = new Intent(new Intent(getApplicationContext(), ProfileActivity.class));
                 startActivity(i);
             }
         });

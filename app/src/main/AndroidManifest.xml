@@ -3,7 +3,6 @@
     package="com.example.sublet4u">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sublet4U">
-        <activity android:name=".customer.ClientInBoxActivity"></activity>
+        <activity android:name=".customer.AfterRegiUpdateProfileActivity" />
+        <activity android:name=".customer.ClientInBoxActivity" />
         <activity
             android:name=".owner.ConfinInviteActivity"
             android:label="confirmInvite"

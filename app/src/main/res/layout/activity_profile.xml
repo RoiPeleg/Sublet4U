@@ -40,7 +40,7 @@
         app:layout_constraintHorizontal_bias="0.095"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.08" />
+        app:layout_constraintVertical_bias="0.087" />
 
     <TextView
         android:id="@+id/viewName"
@@ -78,7 +78,7 @@
         android:layout_width="240dp"
         android:layout_height="140dp"
         android:background="@color/white"
-        android:text="TextView"
+        android:text="Description"
         android:textColor="#0009ff"
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -87,6 +87,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.862" />
+
+    <TextView
+        android:id="@+id/myProfile"
+        android:layout_width="75dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="101dp"
+        android:layout_marginBottom="691dp"
+        android:background="@color/white"
+        android:text="My Profile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/inbox"

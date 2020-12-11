@@ -3,13 +3,6 @@ package com.example.sublet4u.ui.login;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +10,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.sublet4u.R;
+import com.example.sublet4u.customer.AfterRegiUpdateProfileActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -62,12 +61,17 @@ public class RegisterActivity extends AppCompatActivity {
                                     );
                                     boolean isOwner = owner.isChecked();
                                     if(isOwner)
+                                    {
                                         myRef.child("usersType").child(mAuth.getUid()).setValue("owner");
+                                        Intent i = new Intent(new Intent(getApplicationContext(),LoginActivity.class));
+                                        startActivity(i);
+                                    }
                                     else
+                                    {
                                         myRef.child("usersType").child(mAuth.getUid()).setValue("user");
-
-                                    Intent i = new Intent(new Intent(getApplicationContext(),LoginActivity.class));
-                                    startActivity(i);
+                                        Intent i = new Intent(new Intent(getApplicationContext(), AfterRegiUpdateProfileActivity.class));
+                                        startActivity(i);
+                                    }
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
