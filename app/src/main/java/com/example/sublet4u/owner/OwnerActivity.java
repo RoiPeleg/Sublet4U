@@ -31,6 +31,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class OwnerActivity extends AppCompatActivity {
     private static LayoutInflater inflater = null;
@@ -47,7 +48,7 @@ public class OwnerActivity extends AppCompatActivity {
         DatabaseReference myRef = database.getReference("");
         mAuth = FirebaseAuth.getInstance();
 
-        textView.setText(mAuth.getCurrentUser().getDisplayName());
+        textView.setText(Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
         ArrayList<String> allApartment = new ArrayList<>();
         textView.setText(mAuth.getCurrentUser().getDisplayName());
         ArrayList <String> allInvitations = new ArrayList<String>();
@@ -59,10 +60,8 @@ public class OwnerActivity extends AppCompatActivity {
         ownerApa.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Apartment> ap_data = new ArrayList<>();
                 for (DataSnapshot s : snapshot.getChildren()) {
                     allApartment.add(s.getKey());//get owner's apartments
-                    ap_data.add(s.getValue(Apartment.class));
                 }
                 ArrayList<String> inv_ids = new ArrayList<>();
                 myRef.child("Invitations").orderByChild("apartmentID").addListenerForSingleValueEvent(new ValueEventListener() {

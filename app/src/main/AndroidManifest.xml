@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sublet4U">
-        <activity android:name=".ConfinInviteActivity"></activity>
+        <activity android:name=".customer.ClientInBoxActivity"></activity>
+        <activity
+            android:name=".owner.ConfinInviteActivity"
+            android:label="confirmInvite"
+            android:theme="@style/Theme.Sublet4U.NoActionBar" />
         <activity
             android:name=".owner.addapartmentActivity"
             android:label="@string/title_activity_addapartment"

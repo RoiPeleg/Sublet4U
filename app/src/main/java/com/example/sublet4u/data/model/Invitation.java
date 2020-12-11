@@ -60,6 +60,6 @@ public class Invitation {
     @NotNull
     @Override
     public String toString(){
-        return  "client: " + clientID + " arriveDate: "  + arriveDate + " leaveDate:"+ leaveDate;
+        return  "client: " + clientName + "\narriveDate: "  + arriveDate + "\nleaveDate: "+ leaveDate;
     }
 }
