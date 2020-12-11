@@ -23,6 +23,8 @@ public class Respond {
         String s = " ";
         if(!status){
             s += "Sorry your offer was declined for apartment " + ap_name;
+        }else{
+            s +="your offer was accepted for apartment " + ap_name;
         }
         return invitationID + s;
     }
