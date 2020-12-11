@@ -47,6 +47,7 @@ public class FindApartmentUser extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     public String arriveDate, leaveDate;
+    int p=0;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -56,7 +57,6 @@ public class FindApartmentUser extends AppCompatActivity {
         List <String> allApartments = new ArrayList<String>();
         CalendarView arrive = findViewById(R.id.arriveDate);
         CalendarView leave = findViewById(R.id.leaveDate);
-
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("");
@@ -145,6 +145,7 @@ public class FindApartmentUser extends AppCompatActivity {
                                 nameInImg.setText(apart.name);
                                 addressInImg.setText(apart.address);
                                 apartmentPrice.setText(Integer.toString(apart.price));
+                                p = apart.price;
                             }
 
                             @Override
@@ -172,7 +173,7 @@ public class FindApartmentUser extends AppCompatActivity {
             public void onClick(View v){
                 String invitation_id = myRef.child("Invitations").push().getKey();
                 System.out.println(apartID);
-                myRef.child("Invitations").child(invitation_id).setValue(new Invitation(apartID, mAuth.getUid(), arriveDate, leaveDate));
+                myRef.child("Invitations").child(invitation_id).setValue(new Invitation(apartID, mAuth.getUid(), arriveDate, leaveDate, p, mAuth.getCurrentUser().getDisplayName()));
                 if (appartmentsIterator.hasNext()){
                     apartID = appartmentsIterator.next();
                     loadData(apartID);
