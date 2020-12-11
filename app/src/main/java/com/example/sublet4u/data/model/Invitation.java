@@ -8,6 +8,7 @@ public class Invitation {
     public String leaveDate;
     public int price;
     public String clientName;
+    public String apartmentName;
 
     public Invitation(){
         this.apartmentID="";
@@ -16,15 +17,17 @@ public class Invitation {
         this.leaveDate="";
         this.price=0;
         this.clientName = "";
+        this.apartmentName="";
     }
 
-    public  Invitation (String apartmentID, String clientID, String arriveDate, String leaveDate, int price, String clientName){
+    public  Invitation (String apartmentID, String clientID, String arriveDate, String leaveDate, int price, String clientName, String apartmentName){
         this.apartmentID = apartmentID;
         this.clientID = clientID;
         this.arriveDate = arriveDate;
         this.leaveDate = leaveDate;
         this.price = price;
         this.clientName = clientName;
+        this.apartmentName = apartmentName;
     }
 
     public String getClientID()
