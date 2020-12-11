@@ -173,7 +173,7 @@ public class FindApartmentUser extends AppCompatActivity {
             public void onClick(View v){
                 String invitation_id = myRef.child("Invitations").push().getKey();
                 System.out.println(apartID);
-                myRef.child("Invitations").child(invitation_id).setValue(new Invitation(apartID, mAuth.getUid(), arriveDate, leaveDate, p, mAuth.getCurrentUser().getDisplayName()));
+                myRef.child("Invitations").child(invitation_id).setValue(new Invitation(apartID, mAuth.getUid(), arriveDate, leaveDate, p, mAuth.getCurrentUser().getDisplayName(),apart.name));
                 if (appartmentsIterator.hasNext()){
                     apartID = appartmentsIterator.next();
                     loadData(apartID);

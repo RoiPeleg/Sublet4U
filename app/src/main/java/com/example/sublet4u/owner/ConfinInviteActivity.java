@@ -1,4 +1,4 @@
-package com.example.sublet4u;
+package com.example.sublet4u.owner;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -12,8 +12,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sublet4u.R;
 import com.example.sublet4u.customer.FindApartmentUser;
 import com.example.sublet4u.data.model.Client;
+import com.example.sublet4u.data.model.Invitation;
+import com.example.sublet4u.data.model.Respond;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,7 +42,7 @@ public class ConfinInviteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confin_invite);
-        final Button confrim = findViewById(R.id.confrim);
+        final Button confirm = findViewById(R.id.confrim);
         final Button decline = findViewById(R.id.decline);
         final Button chat = findViewById(R.id.chat);
 
@@ -50,16 +53,37 @@ public class ConfinInviteActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
+
         Bundle bundle = getIntent().getExtras();
         Intent receivedIntent  = getIntent();
         String ID = receivedIntent.getStringExtra("clientID");
-//        Toast.makeText(getApplicationContext(), t, Toast.LENGTH_LONG).show();
-
-
-//        String hello = myRef.child("client").child("client").child(ID);
-
+        String invitationID = receivedIntent.getStringExtra("invitationID");
+        String ap_name = receivedIntent.getStringExtra("ap_name");
         loadData(ID);
-//        Toast.makeText(getApplicationContext(), ID, Toast.LENGTH_LONG).show();
+
+        decline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = myRef.child("Responds").push().getKey();
+                assert id != null;
+                myRef.child("Responds").child(id).setValue(new Respond(invitationID,false,ap_name));
+                setResponse(invitationID);
+                Intent i = new Intent(new Intent(getApplicationContext(), OwnerActivity.class));
+                startActivity(i);
+            }
+        });
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = myRef.child("Responds").push().getKey();
+                assert id != null;
+                myRef.child("Responds").child(id).setValue(new Respond(invitationID,true,ap_name));
+                setResponse(invitationID);
+                Intent i = new Intent(new Intent(getApplicationContext(), OwnerActivity.class));
+                startActivity(i);
+            }
+        });
+
         chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,12 +92,6 @@ public class ConfinInviteActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-
-
-
-
-
     }
     private void loadData(String ID){
 
@@ -105,5 +123,21 @@ public class ConfinInviteActivity extends AppCompatActivity {
             }
         }).addOnFailureListener(new OnFailureListener() {@Override public void onFailure(@NonNull Exception exception) {Toast.makeText(getApplicationContext(), "image failed "+exception.toString(), Toast.LENGTH_LONG).show(); }});
 
+    }
+    private void setResponse(String invitationID){
+
+        myRef.child("Invitations").child(invitationID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Invitation invitation = snapshot.getValue(Invitation.class);
+                assert invitation != null;
+                invitation.respond(true);
+                myRef.child("Invitations").child(invitationID).setValue(invitation);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

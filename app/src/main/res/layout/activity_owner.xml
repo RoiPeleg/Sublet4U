@@ -7,39 +7,36 @@
     android:orientation="vertical"
     tools:context=".owner.OwnerActivity">
 
-    <TextView
-        android:id="@+id/textViewName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="172dp"
-        android:layout_marginBottom="748dp"
-        android:text="TextView"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/add_app"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="260dp"
-        android:layout_marginBottom="32dp"
-        android:text="add appertment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="167dp"
-        tools:layout_editor_absoluteY="132dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ListView
             android:id="@+id/listview"
             android:layout_width="413dp"
-            android:layout_height="match_parent" />
+            android:layout_height="415dp" />
+
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="172dp"
+            android:text="TextView"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/add_app"
+            android:layout_width="425dp"
+            android:layout_height="79dp"
+            android:layout_marginBottom="232dp"
+            android:text="add appertment" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
