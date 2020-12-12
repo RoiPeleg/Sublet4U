@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
+    android:background="#0009ff">
+=======
     android:background="#68bed2"
     >
+>>>>>>> origin/master
 
     <Button
         android:id="@+id/dislike"
@@ -136,28 +139,65 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.827" />
 
-    <CalendarView
-        android:id="@+id/arriveDate"
-        android:layout_width="181dp"
-        android:layout_height="285dp"
+    <TextView
+        android:id="@+id/displayArrive"
+        android:layout_width="158dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="225dp"
+        android:layout_marginBottom="618dp"
+        android:text="Arrive Date"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.078"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.112" />
+        app:layout_constraintVertical_bias="1.0" />
 
-    <CalendarView
-        android:id="@+id/leaveDate"
-        android:layout_width="181dp"
-        android:layout_height="283dp"
+    <TextView
+        android:id="@+id/displayLeave"
+        android:layout_width="158dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="226dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginBottom="618dp"
+        android:text="Leave Date"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.938"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.119" />
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/showTheArrive"
+        android:layout_width="159dp"
+        android:layout_height="85dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="168dp"
+        android:layout_marginEnd="223dp"
+        android:layout_marginBottom="478dp"
+        android:text="Set here your arrive date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/showTheLeave"
+        android:layout_width="170dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="216dp"
+        android:layout_marginTop="171dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="488dp"
+        android:text="Set here your leave date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
