@@ -1,12 +1,14 @@
 package com.example.sublet4u.customer;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,12 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.sublet4u.R;
 import com.example.sublet4u.data.model.Apartment;
 import com.example.sublet4u.data.model.Invitation;
-import com.example.sublet4u.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.TaskCompletionSource;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,10 +31,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+import java.util.Locale;
 
 public class FindApartmentUser extends AppCompatActivity {
     DatabaseReference reference;
@@ -45,7 +46,12 @@ public class FindApartmentUser extends AppCompatActivity {
     private DatabaseReference myRef;
     private StorageReference storageRef;
     private FirebaseAuth mAuth;
-
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private DatePickerDialog.OnDateSetListener mDateSetListener1;
+    private TextView mDisplayArrive;
+    private TextView mDisplayLeave;
+    private TextView showTheArriveDate;
+    private TextView showTheLeaveDate;
     public String arriveDate, leaveDate;
     int p=0;
 
@@ -55,9 +61,128 @@ public class FindApartmentUser extends AppCompatActivity {
         setContentView(R.layout.activity_findapartment);
         final TextView yourName = findViewById(R.id.yourName);
         List <String> allApartments = new ArrayList<String>();
-        CalendarView arrive = findViewById(R.id.arriveDate);
-        CalendarView leave = findViewById(R.id.leaveDate);
+        mDisplayLeave = findViewById(R.id.displayLeave);
+        mDisplayArrive = findViewById(R.id.displayArrive);
+        showTheArriveDate = (TextView) findViewById(R.id.showTheArrive);
 
+        //arrive
+        showTheArriveDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(FindApartmentUser.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth, mDateSetListener, year, month, day);
+
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+
+            }
+        });
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day)
+            {
+
+
+
+                String int_day_tostring = "" + day;
+                String int_month_tostring = ""+ (month+1);
+                String date ="";
+                if (int_day_tostring.length() < 2)
+                    date = "0"+day+"/";
+                else
+                    date = day + "/";
+                if (int_month_tostring.length() < 2)
+                    date = date+"0"+(month+1)+"/"+year;
+                else
+                    date = date+(month+1)+"/"+year;
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+                    Calendar cal = Calendar.getInstance();
+                    cal.add(Calendar.DATE, -1);
+                    Date date1 = (cal.getTime());
+                    Date date2 = sdf.parse(date);
+                    if (date1.compareTo(date2) > 0)
+                    {
+                        Toast.makeText(getApplicationContext(), "The arrive date is before than the current date", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        showTheArriveDate.setText(date);
+                        arriveDate = (date);
+                    }
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+//                else
+//                {
+//                    Toast.makeText(getApplicationContext(), "The date passed", Toast.LENGTH_LONG).show();
+//                }
+
+            }
+        };
+
+        //leave
+        showTheLeaveDate = (TextView) findViewById(R.id.showTheLeave);
+        showTheLeaveDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(FindApartmentUser.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth, mDateSetListener1, year, month, day);
+
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+        mDateSetListener1 = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day)
+            {
+                String int_day_tostring = "" + day;
+                String int_month_tostring = ""+ (month+1);
+                String date = "";
+                if (int_day_tostring.length() < 2)
+                    date = "0"+day+"/";
+                else
+                    date = day + "/";
+                if (int_month_tostring.length() < 2)
+                    date = date+"0"+(month+1)+"/"+year;
+                else
+                    date = date+(month+1)+"/"+year;
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+                    Date date1 = sdf.parse(arriveDate);
+                    Date date2 = sdf.parse(date);
+                    if (date1.compareTo(date2) > 0)
+                    {
+                        Toast.makeText(getApplicationContext(), "The arrive date is later than the leave date", Toast.LENGTH_LONG).show();
+                    }
+                    else if (date1.compareTo(date2) == 0)
+                    {
+                        showTheLeaveDate.setText(date);
+                        leaveDate = date;
+                    }
+                    else
+                    {
+                        showTheLeaveDate.setText(date);
+                        leaveDate = date;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("");
         mAuth = FirebaseAuth.getInstance();
@@ -83,44 +208,9 @@ public class FindApartmentUser extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "unalbe to load data", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "unable to load data", Toast.LENGTH_LONG).show();
             }
         });
-
-        arrive.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
-                String int_day_tostring = "" + day;
-                String int_month_tostring = ""+ (month+1);
-
-                if (int_day_tostring.length() < 2)
-                    arriveDate = "0"+day+".";
-                else
-                    arriveDate = day + ".";
-                if (int_month_tostring.length() < 2)
-                    arriveDate = arriveDate+"0"+(month+1)+"."+year;
-                else
-                    arriveDate = arriveDate+(month+1)+"."+year;
-            }
-        });
-
-        leave.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
-                String int_day_tostring = "" + day;
-                String int_month_tostring = ""+ (month+1);
-
-                if (int_day_tostring.length() < 2)
-                    leaveDate = "0"+day+".";
-                else
-                    leaveDate = day + ".";
-                if (int_month_tostring.length() < 2)
-                    leaveDate = leaveDate+"0"+(month+1)+"."+year;
-                else
-                    leaveDate = leaveDate+(month+1)+"."+year;
-            }
-        });
-
     }
 
 
@@ -171,15 +261,24 @@ public class FindApartmentUser extends AppCompatActivity {
         like.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v){
-                String invitation_id = myRef.child("Invitations").push().getKey();
-                System.out.println(apartID);
-                myRef.child("Invitations").child(invitation_id).setValue(new Invitation(apartID, mAuth.getUid(), arriveDate, leaveDate, p, mAuth.getCurrentUser().getDisplayName(),apart.name));
-                if (appartmentsIterator.hasNext()){
-                    apartID = appartmentsIterator.next();
-                    loadData(apartID);
+//                Toast.makeText(getApplicationContext(), showTheArriveDate.getText(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), showTheLeaveDate.getText(), Toast.LENGTH_LONG).show();
+                if(!(showTheArriveDate.getText().equals("Set here your arrive date")) && !(showTheLeaveDate.getText().equals("Set here your leave date"))) {
+                    String invitation_id = myRef.child("Invitations").push().getKey();
+                    System.out.println(apartID);
+                    myRef.child("Invitations").child(invitation_id).setValue(new Invitation(apartID, mAuth.getUid(), arriveDate, leaveDate, p, mAuth.getCurrentUser().getDisplayName(), apart.name));
+                    if (appartmentsIterator.hasNext()) {
+                        apartID = appartmentsIterator.next();
+                        loadData(apartID);
+                        showTheArriveDate.setText("Set here your arrive date");
+                        showTheLeaveDate.setText("Set here your leave date");
+                    } else {
+                        Toast.makeText(getApplicationContext(), "no more apartments", Toast.LENGTH_LONG).show();
+                    }
                 }
-                else {
-                    Toast.makeText(getApplicationContext(), "no more apartments", Toast.LENGTH_LONG).show();
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "You should choose your arrive date and your leave date", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -190,6 +289,8 @@ public class FindApartmentUser extends AppCompatActivity {
                 if (appartmentsIterator.hasNext()){
                     apartID = appartmentsIterator.next();
                     loadData(apartID);
+                    showTheArriveDate.setText("Set here your arrive date");
+                    showTheLeaveDate.setText("Set here your leave date");
                 }
                 else {
                     Toast.makeText(getApplicationContext(), "no more apartments", Toast.LENGTH_LONG).show();
