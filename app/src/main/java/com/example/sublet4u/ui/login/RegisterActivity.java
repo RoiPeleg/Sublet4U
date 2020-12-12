@@ -46,41 +46,44 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAuth.createUserWithEmailAndPassword(usernameEditText.getText().toString().trim(), passwordEditText.getText().toString().trim())
-                        .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Log.d(TAG, "createUserWithEmail:success");
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    user.updateProfile( new UserProfileChangeRequest.Builder()
-                                            .setDisplayName(name.getText().toString())
-                                            .setPhotoUri(Uri.parse(""))
-                                            .build()
-                                    );
-                                    boolean isOwner = owner.isChecked();
-                                    if(isOwner)
-                                    {
-                                        myRef.child("usersType").child(mAuth.getUid()).setValue("owner");
-                                        Intent i = new Intent(new Intent(getApplicationContext(),LoginActivity.class));
-                                        startActivity(i);
+                if(name.getText().toString().equals("") || name.getText().toString().matches("\\d+(?:\\.\\d+)?"))
+                {
+                    Toast.makeText(getApplicationContext(),"Enter a real name",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    mAuth.createUserWithEmailAndPassword(usernameEditText.getText().toString().trim(), passwordEditText.getText().toString().trim())
+                            .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        Log.d(TAG, "createUserWithEmail:success");
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        user.updateProfile(new UserProfileChangeRequest.Builder()
+                                                .setDisplayName(name.getText().toString())
+                                                .setPhotoUri(Uri.parse(""))
+                                                .build()
+                                        );
+                                        boolean isOwner = owner.isChecked();
+                                        if (isOwner) {
+                                            myRef.child("usersType").child(mAuth.getUid()).setValue("owner");
+                                            Intent i = new Intent(new Intent(getApplicationContext(), LoginActivity.class));
+                                            startActivity(i);
+                                        } else {
+                                            myRef.child("usersType").child(mAuth.getUid()).setValue("user");
+                                            Intent i = new Intent(new Intent(getApplicationContext(), AfterRegiUpdateProfileActivity.class));
+                                            startActivity(i);
+                                        }
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                        Toast.makeText(RegisterActivity.this, task.getException().toString(),
+                                                Toast.LENGTH_SHORT).show();
                                     }
-                                    else
-                                    {
-                                        myRef.child("usersType").child(mAuth.getUid()).setValue("user");
-                                        Intent i = new Intent(new Intent(getApplicationContext(), AfterRegiUpdateProfileActivity.class));
-                                        startActivity(i);
-                                    }
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                    Toast.makeText(RegisterActivity.this, task.getException().toString(),
-                                            Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                        });
-
+                            });
+                }
             }});
+
     }
 }
