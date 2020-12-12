@@ -11,6 +11,15 @@
     >
 
     <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="172dp"
+        android:text="TextView"
+        android:textColor="#0009ff"
+        android:textSize="24sp" />
+
+    <TextView
         android:id="@+id/owner_headline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,13 +36,6 @@
         android:layout_height="400dp"
         />
 
-    <TextView
-        android:id="@+id/textViewName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="172dp"
-        android:text="TextView"
-        android:textSize="24sp" />
 
     <Button
         android:id="@+id/add_app"
