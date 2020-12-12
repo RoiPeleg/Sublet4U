@@ -60,42 +60,38 @@ public class SettingsClientActivity extends AppCompatActivity
         updateDesc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!(desc.getText().toString().equals("")))
-                {
+                if (desc.getText().toString().equals("") || desc.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
+                    Toast.makeText(getApplicationContext(), "Enter a normal decription about you", Toast.LENGTH_LONG).show();
+                }
+                else {
                     String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
                     myRef.child("client").child(client_id).child("desc").setValue(desc.getText().toString());
-                }
-                else
-                {
-                    Toast.makeText(getApplicationContext(),"you can't enter nothing",Toast.LENGTH_SHORT).show();
                 }
             }
         });
         updateSex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!(sex.getText().toString().equals("")))
-                {
-                    String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
-                    myRef.child("client").child(client_id).child("sex").setValue(sex.getText().toString());
+                if (!(sex.getText().toString().equals("Male")) || !(sex.getText().toString().equals("Female")) ||sex.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
+                    Toast.makeText(getApplicationContext(), "Enter Female or Male", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(),"you can't enter nothing",Toast.LENGTH_SHORT).show();
+                    String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
+                    myRef.child("client").child(client_id).child("sex").setValue(sex.getText().toString());
                 }
             }
         });
         updateName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!(name.getText().toString().equals("")))
-                {
-                    String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
-                    myRef.child("client").child(client_id).child("name").setValue(name.getText().toString());
+                if (name.getText().toString().equals("") || name.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
+                    Toast.makeText(getApplicationContext(), "Enter a real name", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(),"you can't enter nothing",Toast.LENGTH_SHORT).show();
+                    String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
+                    myRef.child("client").child(client_id).child("name").setValue(name.getText().toString());
                 }
             }
         });

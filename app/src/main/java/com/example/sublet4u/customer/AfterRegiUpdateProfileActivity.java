@@ -57,8 +57,18 @@ public class AfterRegiUpdateProfileActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
-                if (!(name.getText().toString().equals("")) && !(sex.getText().toString().equals(""))
-                        && !(desc.getText().toString().equals("")) && picturePath != null)
+                if (name.getText().toString().equals("") || name.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
+                    Toast.makeText(getApplicationContext(), "Enter a real name", Toast.LENGTH_LONG).show();
+                } else if (desc.getText().toString().equals("") || desc.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
+                    Toast.makeText(getApplicationContext(), "Enter a normal decription about you", Toast.LENGTH_LONG).show();
+                } else if (!(sex.getText().toString().equals("Male")) || !(sex.getText().toString().equals("Female")) ||sex.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
+                    Toast.makeText(getApplicationContext(), "Enter Female or Male", Toast.LENGTH_LONG).show();
+                }
+                else if (picturePath == null)
+                {
+                    Toast.makeText(getApplicationContext(), "Add a picture please", Toast.LENGTH_LONG).show();
+                }
+                else
                 {
                     myRef.child("client").child(client_id).setValue(new Client(name.getText().toString(), desc.getText().toString(),
                             mAuth.getCurrentUser().getUid(), sex.getText().toString()));
@@ -82,10 +92,6 @@ public class AfterRegiUpdateProfileActivity extends AppCompatActivity
 
                     Intent i = new Intent(new Intent(getApplicationContext(), FindApartmentUser.class));
                     startActivity(i);
-                }
-                else
-                {
-                    Toast.makeText(getApplicationContext(), "you should fill everything", Toast.LENGTH_SHORT).show();
                 }
             }
         });
