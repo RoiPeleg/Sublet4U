@@ -61,8 +61,8 @@ public class AfterRegiUpdateProfileActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "Enter a real name", Toast.LENGTH_LONG).show();
                 } else if (desc.getText().toString().equals("") || desc.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
                     Toast.makeText(getApplicationContext(), "Enter a normal decription about you", Toast.LENGTH_LONG).show();
-                } else if (!(sex.getText().toString().equals("Male")) || !(sex.getText().toString().equals("Female")) ||sex.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
-                    Toast.makeText(getApplicationContext(), "Enter Female or Male", Toast.LENGTH_LONG).show();
+                } else if (!sex.getText().toString().equals("Male") && !sex.getText().toString().equals("Female") && !sex.getText().toString().equals("Other")) {
+                    Toast.makeText(getApplicationContext(), "Enter Female or Male or Other", Toast.LENGTH_LONG).show();
                 }
                 else if (picturePath == null)
                 {

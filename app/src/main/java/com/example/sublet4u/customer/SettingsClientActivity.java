@@ -66,19 +66,22 @@ public class SettingsClientActivity extends AppCompatActivity
                 else {
                     String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
                     myRef.child("client").child(client_id).child("desc").setValue(desc.getText().toString());
+                    Toast.makeText(getApplicationContext(), "Description updated", Toast.LENGTH_LONG).show();
                 }
             }
         });
         updateSex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!(sex.getText().toString().equals("Male")) || !(sex.getText().toString().equals("Female")) ||sex.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
-                    Toast.makeText(getApplicationContext(), "Enter Female or Male", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), sex.getText().toString(), Toast.LENGTH_LONG).show();
+                if (sex.getText().toString().equals("Male") || sex.getText().toString().equals("Female") ||sex.getText().toString().equals("Other")) {
+                    String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
+                    myRef.child("client").child(client_id).child("sex").setValue(sex.getText().toString());
+                    Toast.makeText(getApplicationContext(), "Sex updated", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
-                    String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
-                    myRef.child("client").child(client_id).child("sex").setValue(sex.getText().toString());
+                    Toast.makeText(getApplicationContext(), "Enter Female or Male or Other", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -92,6 +95,7 @@ public class SettingsClientActivity extends AppCompatActivity
                 {
                     String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
                     myRef.child("client").child(client_id).child("name").setValue(name.getText().toString());
+                    Toast.makeText(getApplicationContext(), "Name updated", Toast.LENGTH_LONG).show();
                 }
             }
         });
