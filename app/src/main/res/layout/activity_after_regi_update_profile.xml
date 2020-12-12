@@ -32,27 +32,6 @@
         app:layout_constraintVertical_bias="0.408" />
 
     <EditText
-        android:id="@+id/clientName2"
-        android:layout_width="240dp"
-        android:layout_height="wrap_content"
-        android:autoText="false"
-        android:background="@color/white"
-        android:ems="10"
-        android:hint=" Name"
-        android:inputType="textPersonName"
-        android:selectAllOnFocus="false"
-        android:singleLine="false"
-        android:textColor="#0009ff"
-        android:textColorHint="#0009ff"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.122"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.517" />
-
-    <EditText
         android:id="@+id/clientSex2"
         android:layout_width="240dp"
         android:layout_height="30dp"
@@ -100,4 +79,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clientDesc2"
         app:layout_constraintVertical_bias="0.301" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

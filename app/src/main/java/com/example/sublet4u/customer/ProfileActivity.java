@@ -117,8 +117,8 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         client = snapshot.getValue(Client.class);
+                        viewName.setText(mAuth.getCurrentUser().getDisplayName());
                         viewDesc.setText(client.desc);
-                        viewName.setText(client.name);
                         viewSex.setText(client.sex);
                         Toast.makeText(getApplicationContext(), "uploaded", Toast.LENGTH_LONG).show();
                     }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,7 +43,6 @@ public class AfterRegiUpdateProfileActivity extends AppCompatActivity
         setContentView(R.layout.activity_after_regi_update_profile);
         final Button updated = findViewById(R.id.update10);
         final Button addPics = findViewById(R.id.addPics2);
-        final EditText name = findViewById(R.id.clientName2);
         final EditText desc = findViewById(R.id.clientDesc2);
         final EditText sex = findViewById(R.id.clientSex2);
         imageView = findViewById(R.id.clientPic2);
@@ -57,9 +57,7 @@ public class AfterRegiUpdateProfileActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
-                if (name.getText().toString().equals("") || name.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
-                    Toast.makeText(getApplicationContext(), "Enter a real name", Toast.LENGTH_LONG).show();
-                } else if (desc.getText().toString().equals("") || desc.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
+                if (desc.getText().toString().equals("") || desc.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
                     Toast.makeText(getApplicationContext(), "Enter a normal decription about you", Toast.LENGTH_LONG).show();
                 } else if (!sex.getText().toString().equals("Male") && !sex.getText().toString().equals("Female") && !sex.getText().toString().equals("Other")) {
                     Toast.makeText(getApplicationContext(), "Enter Female or Male or Other", Toast.LENGTH_LONG).show();
@@ -70,7 +68,7 @@ public class AfterRegiUpdateProfileActivity extends AppCompatActivity
                 }
                 else
                 {
-                    myRef.child("client").child(client_id).setValue(new Client(name.getText().toString(), desc.getText().toString(),
+                    myRef.child("client").child(client_id).setValue(new Client(desc.getText().toString(),
                             mAuth.getCurrentUser().getUid(), sex.getText().toString()));
                     Uri file = Uri.fromFile(new File(picturePath));
                     StorageReference riversRef = storageRef.child("imagesClient/").child(client_id + "").child("/firstIm");

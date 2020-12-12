@@ -42,10 +42,8 @@ public class SettingsClientActivity extends AppCompatActivity
         final Button back = findViewById(R.id.goBack);
         final Button updateDesc = findViewById(R.id.updateDesc);
         final Button updateSex = findViewById(R.id.updateSex);
-        final Button updateName = findViewById(R.id.updateName);
         final Button updateImg = findViewById(R.id.updateImg);
         final Button addPics = findViewById(R.id.addPics);
-        final EditText name = findViewById(R.id.clientName);
         final EditText desc = findViewById(R.id.clientDesc);
         final EditText sex = findViewById(R.id.clientSex);
         imageView = findViewById(R.id.clientPic);
@@ -82,20 +80,6 @@ public class SettingsClientActivity extends AppCompatActivity
                 else
                 {
                     Toast.makeText(getApplicationContext(), "Enter Female or Male or Other", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        updateName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (name.getText().toString().equals("") || name.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
-                    Toast.makeText(getApplicationContext(), "Enter a real name", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    String client_id = myRef.child("client").child(mAuth.getUid()).getKey();
-                    myRef.child("client").child(client_id).child("name").setValue(name.getText().toString());
-                    Toast.makeText(getApplicationContext(), "Name updated", Toast.LENGTH_LONG).show();
                 }
             }
         });
