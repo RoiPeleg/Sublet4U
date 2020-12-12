@@ -30,6 +30,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ConfinInviteActivity extends AppCompatActivity {
     DatabaseReference reference;
@@ -38,6 +39,7 @@ public class ConfinInviteActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     private StorageReference storageRef;
     private FirebaseAuth mAuth;
+    private String client_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +61,7 @@ public class ConfinInviteActivity extends AppCompatActivity {
         String ID = receivedIntent.getStringExtra("clientID");
         String invitationID = receivedIntent.getStringExtra("invitationID");
         String ap_name = receivedIntent.getStringExtra("ap_name");
+        client_name = receivedIntent.getStringExtra("clientName");
         loadData(ID);
 
         decline.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +112,7 @@ public class ConfinInviteActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         client = snapshot.getValue(Client.class);
                         viewDesc.setText(client.desc);
-                        viewName.setText(client.name);
+                        viewName.setText(Objects.requireNonNull(client_name));
                         viewSex.setText(client.sex);
                         Toast.makeText(getApplicationContext(), "uploaded", Toast.LENGTH_LONG).show();
                     }

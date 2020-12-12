@@ -47,7 +47,6 @@ public class ClientInBoxActivity extends AppCompatActivity {
                     assert invite != null;
                     if(invite.clientID.equals(mAuth.getUid()) && invite.responded){//get invites that were responded
                         invites_ids.add(s.getKey());
-
                     }
                 }
 
@@ -57,14 +56,11 @@ public class ClientInBoxActivity extends AppCompatActivity {
                         ArrayList<Respond> resp = new ArrayList<>();
                         for(DataSnapshot s : snapshot.getChildren()){
                             Respond respond = s.getValue(Respond.class);
-                            System.out.println(s.getKey()+" "+respond.invitationID);
                             assert respond != null;
                             if(invites_ids.contains(respond.invitationID)){
                                 resp.add(respond);
-                                System.out.println("in"+s.getKey());
                             }
                         }
-                        System.out.println(resp.size());
                         mListView.setAdapter(new ArrayAdapter<Respond>(ClientInBoxActivity.this,android.R.layout.simple_list_item_1,resp));
                     }
 

@@ -83,6 +83,7 @@ public class OwnerActivity extends AppCompatActivity {
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Intent i = new Intent(OwnerActivity.this, ConfinInviteActivity.class);
                                 i.putExtra("clientID",inv.get(position).getClientID());
+                                i.putExtra("clientName",inv.get(position).clientName);
                                 i.putExtra("invitationID",inv_ids.get(position));
                                 i.putExtra("ap_name",inv.get(position).apartmentName);
                                 startActivity(i);
