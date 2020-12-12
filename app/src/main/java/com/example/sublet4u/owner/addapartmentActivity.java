@@ -7,6 +7,16 @@ import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.sublet4u.R;
 import com.example.sublet4u.data.model.Apartment;
@@ -19,20 +29,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
-import android.provider.MediaStore;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
-
 import java.io.File;
 
-public class addapartmentActivity extends AppCompatActivity {
+public class  addapartmentActivity extends AppCompatActivity {
     private ImageView imageView;
     private StorageReference storageRef;
     private String picturePath;
@@ -56,28 +55,44 @@ public class addapartmentActivity extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 String ap_id = myRef.child("apartment").push().getKey();
+                String ap_id = myRef.child("apartment").push().getKey();
+                if (name.getText().toString().equals("") || name.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
+                    Toast.makeText(getApplicationContext(), "Enter a real name", Toast.LENGTH_LONG).show();
+                } else if (desc.getText().toString().equals("") || desc.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
+                    Toast.makeText(getApplicationContext(), "Enter a normal decription about you", Toast.LENGTH_LONG).show();
+                } else if (address.getText().toString().equals("") || address.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
+                    Toast.makeText(getApplicationContext(), "Enter a real address", Toast.LENGTH_LONG).show();
+                } else if (price.getText().toString().equals("") || !(price.getText().toString().matches("\\d+(?:\\.\\d+)?"))) {
+                    Toast.makeText(getApplicationContext(), "Enter a the correct price", Toast.LENGTH_LONG).show();
+                }
+                else if (picturePath == null)
+                {
+                    Toast.makeText(getApplicationContext(), "Add a picture please", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    myRef.child("apartment").child(ap_id).setValue(new Apartment(name.getText().toString(), desc.getText().toString(), address.getText().toString(), mAuth.getCurrentUser().getUid(), Integer.parseInt(price.getText().toString())));
+                    Uri file = Uri.fromFile(new File(picturePath));
+                    StorageReference riversRef = storageRef.child("images/").child(ap_id + "").child("firstIm");
+                    UploadTask uploadTask = riversRef.putFile(file);
 
-                myRef.child("apartment").child(ap_id).setValue(new Apartment(name.getText().toString(),desc.getText().toString(),address.getText().toString(), mAuth.getCurrentUser().getUid(),  Integer. parseInt(price.getText().toString())));
-                Uri file = Uri.fromFile(new File(picturePath));
-                StorageReference riversRef = storageRef.child("images/").child(ap_id+"").child("firstIm");
-                UploadTask  uploadTask = riversRef.putFile(file);
+                    // Register observers to listen for when the download is done or if it fails
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(getApplicationContext(), "Upload Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                            Toast.makeText(getApplicationContext(), "Upload Successful", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
-                // Register observers to listen for when the download is done or if it fails
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        Toast.makeText(getApplicationContext(),"Upload Failed",Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                        Toast.makeText(getApplicationContext(),"Upload Successful",Toast.LENGTH_SHORT).show();
-                    }});
-
-                Intent i = new Intent(new Intent(getApplicationContext(), OwnerActivity.class));
-                startActivity(i);
+                    Intent i = new Intent(new Intent(getApplicationContext(), OwnerActivity.class));
+                    startActivity(i);
+                }
             }
         });
         addP.setOnClickListener(new View.OnClickListener() {
