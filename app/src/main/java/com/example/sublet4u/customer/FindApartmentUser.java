@@ -118,12 +118,6 @@ public class FindApartmentUser extends AppCompatActivity {
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
-
-//                else
-//                {
-//                    Toast.makeText(getApplicationContext(), "The date passed", Toast.LENGTH_LONG).show();
-//                }
-
             }
         };
 
@@ -226,7 +220,6 @@ public class FindApartmentUser extends AppCompatActivity {
                     public void onSuccess(byte[] bytes) {
                         // Use the bytes to display the image
                         apaImage.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
-                        Toast.makeText(getApplicationContext(),"new image",Toast.LENGTH_LONG).show();
                         myRef.child("apartment").child(ID).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -261,8 +254,6 @@ public class FindApartmentUser extends AppCompatActivity {
         like.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v){
-//                Toast.makeText(getApplicationContext(), showTheArriveDate.getText(), Toast.LENGTH_LONG).show();
-//                Toast.makeText(getApplicationContext(), showTheLeaveDate.getText(), Toast.LENGTH_LONG).show();
                 if(!(showTheArriveDate.getText().equals("Set here your arrive date")) && !(showTheLeaveDate.getText().equals("Set here your leave date"))) {
                     String invitation_id = myRef.child("Invitations").push().getKey();
                     System.out.println(apartID);

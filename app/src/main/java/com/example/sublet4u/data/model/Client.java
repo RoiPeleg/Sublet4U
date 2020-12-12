@@ -6,7 +6,6 @@ public class Client
 {
     public String desc;
     public String clientID;
-//    public ImageView imageView;
     public String sex;
 
     public Client(){
@@ -17,7 +16,6 @@ public class Client
     public Client(String desc, String clientID, String sex){
         this.desc = desc;
         this.clientID = clientID;
-//        this.imageView  = imageView;
         this.sex = sex;
     }
 
