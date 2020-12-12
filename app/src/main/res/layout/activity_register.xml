@@ -14,7 +14,7 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        android:background="#0009ff"
+        android:background="#68bed2"
         tools:context=".ui.login.LoginActivity">
 
         <TextView
@@ -26,7 +26,8 @@
             android:textSize="50dp"
             android:textColor="@color/white"
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="46dp" />
+            tools:layout_editor_absoluteY="46dp"
+            tools:ignore="MissingConstraints" />
 
         <EditText
             android:id="@+id/username"
@@ -93,9 +94,8 @@
             android:layout_marginStart="28dp"
             android:layout_marginTop="13dp"
             android:enabled="true"
-
             android:text="Apartment owner"
-            android:textColor="@color/white"
+            android:textColor="#0009ff"
             app:layout_constraintBottom_toTopOf="@+id/register"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/disName"

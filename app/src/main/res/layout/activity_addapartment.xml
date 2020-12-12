@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0009ff"
+    android:background="#68bed2"
     tools:context=".owner.addapartmentActivity" >
 
     <TextView
@@ -77,6 +77,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="292dp"
         android:text="Done"
+        android:background="#26515c"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/address"
@@ -89,6 +90,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
         android:text="add photos"
+        android:background="#26515c"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/address" />
 

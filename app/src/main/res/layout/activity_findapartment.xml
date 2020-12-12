@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0009ff"
+    android:background="#68bed2"
     >
 
     <Button
@@ -112,7 +112,7 @@
         android:layout_width="114dp"
         android:layout_height="24dp"
         android:text="TextView"
-        android:textColor="@color/white"
+        android:textColor="#0009ff"
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
