@@ -4,28 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".customer.ClientInBoxActivity"
-    android:padding="16dp"
     android:background="#68bed2"
-    >
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".customer.ClientInBoxActivity">
 
     <TextView
         android:id="@+id/inboxHeadline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="INBOX"
-        android:textSize="40dp"
         android:layout_gravity="center"
         android:layout_marginBottom="30dp"
+        android:text="INBOX"
         android:textColor="@color/white"
-        />
+        android:textSize="40dp" />
 
     <ListView
         android:id="@+id/listviewInbox"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        />
+        android:layout_height="400dp" />
+
+    <ListView
+        android:id="@+id/pending"
+        android:layout_width="wrap_content"
+        android:layout_height="209dp"
+        android:visibility="visible" />
 
 
 </LinearLayout>

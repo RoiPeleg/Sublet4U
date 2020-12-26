@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class OwnerActivity extends AppCompatActivity {
-    private static LayoutInflater inflater = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

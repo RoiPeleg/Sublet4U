@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sublet4u.ChatActivity;
 import com.example.sublet4u.R;
 import com.example.sublet4u.customer.FindApartmentUser;
 import com.example.sublet4u.data.model.Client;
@@ -91,7 +92,8 @@ public class ConfinInviteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //should go to chat
-                Intent i = new Intent(new Intent(getApplicationContext(), FindApartmentUser.class));
+                Intent i = new Intent(new Intent(getApplicationContext(), ChatActivity.class));
+                i.putExtra("reID",ID);
                 startActivity(i);
             }
         });
