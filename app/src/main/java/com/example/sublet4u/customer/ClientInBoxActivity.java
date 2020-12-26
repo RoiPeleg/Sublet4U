@@ -84,21 +84,23 @@ public class ClientInBoxActivity extends AppCompatActivity {
                 pending.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String ap_id = snapshot.getValue(Invitation.class).getApartmentID();
-
-                        myRef.child("apartment").child(ap_id).addListenerForSingleValueEvent(new ValueEventListener() {
+                        String ap_id = unResponded.get(position).getApartmentID();
+                        myRef.child("apartment").orderByValue().addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                String Owner_id = snapshot.getValue(Apartment.class).name;
-                                Toast.makeText(getApplicationContext(),Owner_id,Toast.LENGTH_LONG).show();
-                                Intent i = new Intent(getApplicationContext(), ChatActivity.class);
-                                i.putExtra("reID",Owner_id);
-                                startActivity(i);
-                            }
+                                for(DataSnapshot s : snapshot.getChildren()) {
 
+                                    if (s.getKey().equals(ap_id)) {
+                                        Apartment apartment = s.getValue(Apartment.class);
+                                        Intent i = new Intent(getApplicationContext(), ChatActivity.class);
+                                        i.putExtra("reID", apartment.ownerID);
+                                        startActivity(i);
+                                    }
+                                }
+                            }
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-
+                                Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
                             }
                         });
                     }

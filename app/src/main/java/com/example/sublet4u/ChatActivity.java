@@ -141,7 +141,7 @@ public class ChatActivity extends AppCompatActivity {
                                             int position,
                                             @NotNull Message friendlyMessage) {
                 mProgressBar.setVisibility(ProgressBar.INVISIBLE);
-                if (friendlyMessage.getReceiverID().equals(mAuth.getUid()) && friendlyMessage.getSenderID().equals(reID)) {
+                if ((friendlyMessage.getReceiverID().equals(mAuth.getUid()) && friendlyMessage.getSenderID().equals(reID)) || (friendlyMessage.getReceiverID().equals(reID) && friendlyMessage.getSenderID().equals(mAuth.getUid()))) {
                     if (friendlyMessage.getText() != null) {
                         viewHolder.messageTextView.setText(friendlyMessage.getText());
                         viewHolder.messageTextView.setVisibility(TextView.VISIBLE);
