@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ public class SettingsClientActivity extends AppCompatActivity
         final Button updateSex = findViewById(R.id.updateSex);
         final Button updateImg = findViewById(R.id.updateImg);
         final Button addPics = findViewById(R.id.addPics);
+        final Button takePic = findViewById(R.id.takePic);
         final EditText desc = findViewById(R.id.clientDesc);
         final EditText sex = findViewById(R.id.clientSex);
         imageView = findViewById(R.id.clientPic);
@@ -128,6 +130,13 @@ public class SettingsClientActivity extends AppCompatActivity
 
             }
         });
+        takePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, 0);
+            }
+        });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -143,20 +152,26 @@ public class SettingsClientActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_CANCELED) {
             if (resultCode == RESULT_OK && data != null) {
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                if (selectedImage != null) {
-                    Cursor cursor = getContentResolver().query(selectedImage,
-                            filePathColumn, null, null, null);
-                    if (cursor != null) {
-                        cursor.moveToFirst();
+                if (requestCode == 1) {
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    if (selectedImage != null) {
+                        Cursor cursor = getContentResolver().query(selectedImage,
+                                filePathColumn, null, null, null);
+                        if (cursor != null) {
+                            cursor.moveToFirst();
 
-                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                        picturePath = cursor.getString(columnIndex);
+                            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                            picturePath = cursor.getString(columnIndex);
 
-                        imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-                        cursor.close();
+                            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                            cursor.close();
+                        }
                     }
+                }
+                else if (requestCode==0){
+                    Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+                    imageView.setImageBitmap(bitmap);
                 }
             }
         }
