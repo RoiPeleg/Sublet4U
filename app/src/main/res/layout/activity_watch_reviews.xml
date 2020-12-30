@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".owner.PriorityActivity"
+    tools:context=".owner.PropertiesActivity"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="#68bed2">

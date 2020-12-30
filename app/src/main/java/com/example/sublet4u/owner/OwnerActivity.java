@@ -112,7 +112,7 @@ public class OwnerActivity extends AppCompatActivity {
         priority.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(new Intent(getApplicationContext(), PriorityActivity.class));
+                Intent i = new Intent(new Intent(getApplicationContext(), PropertiesActivity.class));
                 startActivity(i);
             }
         });

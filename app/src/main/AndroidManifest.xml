@@ -14,7 +14,7 @@
         <activity android:name=".owner.ApplyCommentActivity"></activity>
         <activity android:name=".owner.WatchReviewsActivity" />
         <activity
-            android:name=".owner.PriorityActivity"
+            android:name=".owner.PropertiesActivity"
             android:theme="@style/Theme.Sublet4U.NoActionBar" />
         <activity
             android:name=".customer.ClientInBoxActivity"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".owner.PriorityActivity"
+    tools:context=".owner.PropertiesActivity"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="#68bed2">
@@ -25,12 +25,12 @@
 
 
     <TextView
-        android:id="@+id/ownerPriotiry"
+        android:id="@+id/ownerProperties"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="30dp"
-        android:text="Your Priority"
+        android:text="Your property"
         android:textColor="#0009ff"
         android:textSize="40dp" />
 

@@ -114,7 +114,7 @@ public class WatchReviewsActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),  snapshot.getValue().toString(), Toast.LENGTH_LONG).show();
                         if (snapshot.getValue().toString().equals("owner"))
                         {
-                            Intent i = new Intent(new Intent(getApplicationContext(), PriorityActivity.class));
+                            Intent i = new Intent(new Intent(getApplicationContext(), PropertiesActivity.class));
                             startActivity(i);
                         }
                         else

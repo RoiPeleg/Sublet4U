@@ -26,12 +26,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class PriorityActivity extends AppCompatActivity {
+public class PropertiesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_priority);
+        setContentView(R.layout.activity_properties);
         final TextView textView = findViewById(R.id.ownerNamePriority);
         ListView mListView = findViewById(R.id.allOfApartments);
 
@@ -59,11 +59,11 @@ public class PriorityActivity extends AppCompatActivity {
                     Apartment apartment = s.getValue(Apartment.class);
                     allApa.add(apartment);
                 }
-                mListView.setAdapter(new ArrayAdapter<Apartment>(PriorityActivity.this,android.R.layout.simple_list_item_1,allApa));
+                mListView.setAdapter(new ArrayAdapter<Apartment>(PropertiesActivity.this,android.R.layout.simple_list_item_1,allApa));
                 mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent i = new Intent(PriorityActivity.this, WatchReviewsActivity.class);
+                        Intent i = new Intent(PropertiesActivity.this, WatchReviewsActivity.class);
                         i.putExtra("apartmentID",allApartment.get(position));
                         startActivity(i);
                     }

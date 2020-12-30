@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#68bed2"
-    tools:context=".ConfinInviteActivity">
+    tools:context=".owner.ConfinInviteActivity">
 
     <Button
         android:id="@+id/chat"

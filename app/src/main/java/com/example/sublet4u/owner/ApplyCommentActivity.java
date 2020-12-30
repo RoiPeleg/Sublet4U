@@ -41,7 +41,7 @@ public class ApplyCommentActivity extends AppCompatActivity {
                     String ID = receivedIntent.getStringExtra("ratingID");
                     myRef.child("Rating").child(ID).child("commentOwner").setValue(commentOfOwner.getText().toString());
                     Toast.makeText(getApplicationContext(), "Comment updated", Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(ApplyCommentActivity.this, PriorityActivity.class);
+                    Intent i = new Intent(ApplyCommentActivity.this, PropertiesActivity.class);
                     startActivity(i);
                 }
             }
