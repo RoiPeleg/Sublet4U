@@ -6,6 +6,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.sublet4u.R;
 import com.example.sublet4u.data.model.Apartment;
@@ -64,6 +68,8 @@ public class FindApartmentUser extends AppCompatActivity {
         mDisplayLeave = findViewById(R.id.displayLeave);
         mDisplayArrive = findViewById(R.id.displayArrive);
         showTheArriveDate = (TextView) findViewById(R.id.showTheArrive);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         //arrive
         showTheArriveDate.setOnClickListener(new View.OnClickListener() {
@@ -207,6 +213,33 @@ public class FindApartmentUser extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.client_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itemProfile:
+                Intent i1 = new Intent(new Intent(getApplicationContext(), ProfileActivity.class));
+                startActivity(i1);
+                return true;
+            case R.id.itemInbox:
+                Intent i2 = new Intent(new Intent(getApplicationContext(), ClientInBoxActivity.class));
+                startActivity(i2);
+                return true;
+            case R.id.itemSetting:
+                Intent i3 = new Intent(new Intent(getApplicationContext(), SettingsClientActivity.class));
+                startActivity(i3);
+                return true;
+            default:
+                Toast.makeText(this, "nothing chosen", Toast.LENGTH_SHORT);
+            return super.onOptionsItemSelected(item);
+        }
+    }
 
     private void loadData(String ID){
         final TextView addressInImg = findViewById(R.id.addressInImg);
@@ -245,7 +278,6 @@ public class FindApartmentUser extends AppCompatActivity {
     private void check (List<String> apartments){
         final Button like = findViewById(R.id.like);
         final Button dislike = findViewById(R.id.dislike);
-        final Button design = findViewById(R.id.design);
 
         Iterator<String> appartmentsIterator = apartments.iterator();
         apartID = appartmentsIterator.next();
@@ -288,14 +320,6 @@ public class FindApartmentUser extends AppCompatActivity {
                 }
             }
         });
-        design.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                //just skip the picture and keep going to the next apartment
-                Intent i = new Intent(new Intent(getApplicationContext(), ProfileActivity.class));
-                startActivity(i);
-            }
-        });
+
     }
 }
