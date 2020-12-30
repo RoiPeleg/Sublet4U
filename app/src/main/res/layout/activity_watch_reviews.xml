@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".owner.PriorityActivity"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#68bed2">
+
+    <Button
+        android:id="@+id/backToPriority"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="back" />
+
+    <TextView
+        android:id="@+id/ownerPriotiry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        android:text="Reviews of Clients"
+        android:textColor="#0009ff"
+        android:textSize="40dp" />
+
+    <TextView
+        android:id="@+id/gradeApa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        android:text="Apartment Grade: "
+        android:textColor="#0009ff"
+        android:textSize="30dp" />
+
+    <ListView
+        android:id="@+id/allReviews"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

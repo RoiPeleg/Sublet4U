@@ -1,5 +1,7 @@
 package com.example.sublet4u.data.model;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Apartment {
     public String name;
     public  String desc;
@@ -21,5 +23,10 @@ public class Apartment {
         this.address = address;
         this.ownerID = ownerID;
         this.price = price;
+    }
+
+    @NotNull
+    public String toString(){
+        return  "Name: " + this.name + "\nDescription: "  + this.desc + "\nAddress: "+ this.address + "\nPrice: "+ this.price;
     }
 }

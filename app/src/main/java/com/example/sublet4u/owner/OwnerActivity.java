@@ -1,12 +1,8 @@
 package com.example.sublet4u.owner;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,11 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.sublet4u.data.model.Apartment;
-import com.example.sublet4u.owner.ConfinInviteActivity;
 import com.example.sublet4u.R;
 import com.example.sublet4u.data.model.Invitation;
-import com.firebase.ui.database.FirebaseListAdapter;
+import com.example.sublet4u.ui.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,6 +34,7 @@ public class OwnerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_owner);
         final  Button add_ap = findViewById(R.id.add_app);
         final TextView textView = findViewById(R.id.textViewName);
+        final Button priority = findViewById(R.id.priority);
         ListView mListView = findViewById(R.id.listview);
 
         FirebaseAuth mAuth;
@@ -109,6 +104,24 @@ public class OwnerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(new Intent(getApplicationContext(), addapartmentActivity.class));
+                startActivity(i);
+            }
+        });
+
+        //owner can watch his own priority
+        priority.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(new Intent(getApplicationContext(), PriorityActivity.class));
+                startActivity(i);
+            }
+        });
+
+        final Button signOut = findViewById(R.id.signOutOwner);
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(new Intent(getApplicationContext(), LoginActivity.class));
                 startActivity(i);
             }
         });

@@ -23,4 +23,8 @@
     <string name="title_activity_addapartment">addapartmentActivity</string>
     <string name="dislike">dislike</string>
     <string name="like">like</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_client_boc">ClientBocActivity</string>
+    <string name="title_activity_client_in_box" />
+    <string name="title_activity_priority">PriorityActivity</string>
 </resources>

@@ -21,8 +21,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.sublet4u.R;
+import com.example.sublet4u.owner.WatchReviewsActivity;
 import com.example.sublet4u.data.model.Apartment;
 import com.example.sublet4u.data.model.Invitation;
+import com.example.sublet4u.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -107,7 +109,7 @@ public class FindApartmentUser extends AppCompatActivity {
                 else
                     date = date+(month+1)+"/"+year;
                 try {
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
                     Calendar cal = Calendar.getInstance();
                     cal.add(Calendar.DATE, -1);
                     Date date1 = (cal.getTime());
@@ -278,6 +280,7 @@ public class FindApartmentUser extends AppCompatActivity {
     private void check (List<String> apartments){
         final Button like = findViewById(R.id.like);
         final Button dislike = findViewById(R.id.dislike);
+        final Button design = findViewById(R.id.design);
 
         Iterator<String> appartmentsIterator = apartments.iterator();
         apartID = appartmentsIterator.next();
@@ -318,6 +321,32 @@ public class FindApartmentUser extends AppCompatActivity {
                 else {
                     Toast.makeText(getApplicationContext(), "no more apartments", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+        design.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                //just skip the picture and keep going to the next apartment
+                Intent i = new Intent(new Intent(getApplicationContext(), ProfileActivity.class));
+                startActivity(i);
+            }
+        });
+        final Button watchRating = findViewById(R.id.ratingOfThisApa);
+        watchRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(new Intent(getApplicationContext(), WatchReviewsActivity.class));
+                i.putExtra("apartmentID", apartID);
+                startActivity(i);
+            }
+        });
+        final Button signOut = findViewById(R.id.signOut);
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(new Intent(getApplicationContext(), LoginActivity.class));
+                startActivity(i);
             }
         });
 

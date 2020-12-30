@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".owner.OwnerActivity"
+    android:orientation="vertical"
     android:padding="16dp"
-    android:background="#68bed2"
-    >
+    android:background="#68bed2">
 
     <TextView
         android:id="@+id/textViewName"
@@ -35,15 +34,27 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
         />
-
+    <Button
+        android:id="@+id/signOutOwner"
+        android:layout_width="425dp"
+        android:layout_height="79dp"
+        android:layout_gravity="end"
+        android:text="Sign Out" />
+    <Button
+        android:id="@+id/priority"
+        android:layout_width="425dp"
+        android:layout_height="79dp"
+        android:layout_gravity="end"
+        android:text="your property" />
 
     <Button
         android:id="@+id/add_app"
         android:layout_width="425dp"
         android:layout_height="79dp"
+        android:layout_gravity="end"
         android:layout_marginBottom="232dp"
-        android:text="add appertment"
-        android:layout_gravity="center"
-        />
+        android:text="add appertment" />
+
+
 
 </LinearLayout>

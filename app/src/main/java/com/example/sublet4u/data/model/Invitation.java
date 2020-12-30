@@ -35,7 +35,7 @@ public class Invitation {
         this.responded = false;
     }
 
-    public  Invitation (String apartmentID, String clientID, String arriveDate, String leaveDate, int price, String clientName, String apartmentName){
+    public Invitation (String apartmentID, String clientID, String arriveDate, String leaveDate, int price, String clientName, String apartmentName){
         this.apartmentID = apartmentID;
         this.clientID = clientID;
         this.arriveDate = arriveDate;
@@ -50,7 +50,10 @@ public class Invitation {
     {
         return this.clientID;
     }
-
+    public String getLeaveDate()
+    {
+        return this.leaveDate;
+    }
     public String getApartmentID() {
         return this.apartmentID;
     }
