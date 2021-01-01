@@ -27,6 +27,7 @@ import com.example.sublet4u.data.model.Apartment;
 import com.example.sublet4u.data.model.Invitation;
 import com.example.sublet4u.data.model.Message;
 import com.example.sublet4u.data.model.Respond;
+import com.example.sublet4u.owner.ApplyCommentActivity;
 import com.example.sublet4u.owner.ConfinInviteActivity;
 import com.example.sublet4u.owner.OwnerActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -45,7 +46,12 @@ import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -71,12 +77,16 @@ public class ClientInBoxActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<String> invites_ids = new ArrayList<>();
+                ArrayList<Invitation> inv = new ArrayList<>();
                 ArrayList<Invitation> unResponded = new ArrayList<>();
                 for(DataSnapshot s : snapshot.getChildren()){
                     Invitation invite = s.getValue(Invitation.class);
                     assert invite != null;
                     if(invite.clientID.equals(mAuth.getUid()) && invite.responded)//get invites that were responded
+                    {
                         invites_ids.add(s.getKey());
+                        inv.add(invite);
+                    }
                     if(invite.clientID.equals(mAuth.getUid()) && !invite.responded)
                         unResponded.add(invite);
                 }
@@ -103,6 +113,7 @@ public class ClientInBoxActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
                             }
                         });
+
                     }
                 });
 
@@ -116,13 +127,59 @@ public class ClientInBoxActivity extends AppCompatActivity {
                             if(invites_ids.contains(respond.invitationID)) resp.add(respond);
                         }
                         mListView.setAdapter(new ArrayAdapter<Respond>(ClientInBoxActivity.this,android.R.layout.simple_list_item_1,resp));
+                        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                            {
+                                myRef.child("Invitations").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot)
+                                    {
+                                        String date = inv.get(position).leaveDate;
+                                        Toast.makeText(getApplicationContext(), date, Toast.LENGTH_LONG).show();
+                                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
+                                        Calendar cal = Calendar.getInstance();
+                                        cal.add(Calendar.DATE, 0);
+                                        Date date1 = (cal.getTime());
+                                        Date date2 = null;
+                                        try {
+                                            date2 = sdf.parse(date);
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+                                        assert date2 != null;
+                                        if (!resp.get(position).status)
+                                        {
+                                            Toast.makeText(getApplicationContext(),"This invitation was declined",Toast.LENGTH_LONG).show();
+                                        }
+                                        else if (date2.compareTo(date1) > 0)
+                                        {
+                                            Toast.makeText(getApplicationContext(), "You need to finish your invitation", Toast.LENGTH_LONG).show();
+                                        }
+                                        else if (resp.get(position).status)
+                                        {
+                                            Intent i = new Intent(getApplicationContext(), RateApartmentActivity.class);
+                                            i.putExtra("invitationID", resp.get(position).invitationID);
+                                            startActivity(i);
+                                        }
+                                    }
+                                    //
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                        });
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                         System.out.println(error.toString());
                     }
+
                 });
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
