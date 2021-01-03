@@ -2,6 +2,9 @@ package com.example.sublet4u.owner;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,8 +15,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.sublet4u.R;
+import com.example.sublet4u.customer.ClientInBoxActivity;
+import com.example.sublet4u.customer.ProfileActivity;
+import com.example.sublet4u.customer.SettingsClientActivity;
 import com.example.sublet4u.data.model.Invitation;
 import com.example.sublet4u.ui.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,10 +39,10 @@ public class OwnerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner);
-        final  Button add_ap = findViewById(R.id.add_app);
         final TextView textView = findViewById(R.id.textViewName);
-        final Button priority = findViewById(R.id.priority);
         ListView mListView = findViewById(R.id.listview);
+        Toolbar toolbar = findViewById(R.id.ownerToolbar);
+        setSupportActionBar(toolbar);
 
         FirebaseAuth mAuth;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -99,31 +106,30 @@ public class OwnerActivity extends AppCompatActivity {
             }
         });
 
-        //Sends to add new apartment page
-        add_ap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(new Intent(getApplicationContext(), addapartmentActivity.class));
-                startActivity(i);
-            }
-        });
+    }
 
-        //owner can watch his own priority
-        priority.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(new Intent(getApplicationContext(), PropertiesActivity.class));
-                startActivity(i);
-            }
-        });
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.owner_menu, menu);
+        return true;
+    }
 
-        final Button signOut = findViewById(R.id.signOutOwner);
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(new Intent(getApplicationContext(), LoginActivity.class));
-                startActivity(i);
-            }
-        });
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itemAddApartment:
+                Intent i1 = new Intent(new Intent(getApplicationContext(), addapartmentActivity.class));
+                startActivity(i1);
+                return true;
+            case R.id.itemProperty:
+                Intent i2 = new Intent(new Intent(getApplicationContext(), PropertiesActivity.class));
+                startActivity(i2);
+                return true;
+            case R.id.itemOwnerSignOut:
+                Toast.makeText(this, "Sign Out", Toast.LENGTH_SHORT);
+                return true;
+            default:
+                Toast.makeText(this, "nothing chosen", Toast.LENGTH_SHORT);
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -7,7 +7,7 @@
     android:background="#68bed2">
 
     <include
-        android:id="@+id/toolbar"
+        android:id="@+id/clientToolbar"
         layout="@layout/toolbar"
         />
     <Button
@@ -37,18 +37,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.975" />
 
-    <Button
-        android:id="@+id/design"
-        android:layout_width="100dp"
-        android:layout_height="66dp"
-        android:text="Profile"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.951"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.006" />
 
     <ImageView
         android:id="@+id/midImage"
@@ -77,7 +65,7 @@
         app:layout_constraintHorizontal_bias="0.823"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.47" />
+        app:layout_constraintVertical_bias="0.422" />
 
     <TextView
         android:id="@+id/addressInImg"
@@ -92,7 +80,7 @@
         app:layout_constraintHorizontal_bias="0.823"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.529" />
+        app:layout_constraintVertical_bias="0.482" />
 
     <TextView
         android:id="@+id/descriptionInImg"
@@ -107,7 +95,7 @@
         app:layout_constraintHorizontal_bias="0.823"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.657" />
+        app:layout_constraintVertical_bias="0.605" />
 
     <TextView
         android:id="@+id/yourName"
@@ -136,7 +124,7 @@
         app:layout_constraintHorizontal_bias="0.823"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.747" />
+        app:layout_constraintVertical_bias="0.704" />
 
     <TextView
         android:id="@+id/displayArrive"
@@ -144,6 +132,7 @@
         android:layout_height="43dp"
         android:gravity="center"
         android:text="Arrive Date"
+        android:textSize="24dp"
         android:textColor="#0009ff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -199,29 +188,13 @@
         android:id="@+id/ratingOfThisApa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="282dp"
-        android:layout_marginTop="251dp"
-        android:layout_marginEnd="17dp"
-        android:layout_marginBottom="486dp"
-        android:text="Rating"
+        android:text="Reviews"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.762"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/signOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="263dp"
-        android:layout_marginEnd="271dp"
-        android:layout_marginBottom="474dp"
-        android:text="Sign Out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.781" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

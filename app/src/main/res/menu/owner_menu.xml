@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/itemProperty"
+        android:title="My Appartments"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/itemAddApartment"
+        android:title="Add Appartment"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/itemOwnerSignOut"
+        android:title="Sign Out"
+        app:showAsAction="never"
+        />
+
+</menu>

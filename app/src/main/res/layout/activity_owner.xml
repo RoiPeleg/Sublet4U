@@ -9,11 +9,16 @@
     android:padding="16dp"
     android:background="#68bed2">
 
+    <include
+        android:id="@+id/ownerToolbar"
+        layout="@layout/toolbar"
+        />
+
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="172dp"
+        android:layout_gravity="center"
         android:text="TextView"
         android:textColor="#0009ff"
         android:textSize="24sp" />
@@ -32,28 +37,9 @@
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        />
-    <Button
-        android:id="@+id/signOutOwner"
-        android:layout_width="425dp"
-        android:layout_height="79dp"
-        android:layout_gravity="end"
-        android:text="Sign Out" />
-    <Button
-        android:id="@+id/priority"
-        android:layout_width="425dp"
-        android:layout_height="79dp"
-        android:layout_gravity="end"
-        android:text="your property" />
+        android:layout_height="479dp" />
 
-    <Button
-        android:id="@+id/add_app"
-        android:layout_width="425dp"
-        android:layout_height="79dp"
-        android:layout_gravity="end"
-        android:layout_marginBottom="232dp"
-        android:text="add appertment" />
+
 
 
 

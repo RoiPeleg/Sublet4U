@@ -11,31 +11,28 @@
 
     <EditText
         android:id="@+id/commentReview"
-        android:layout_width="292dp"
+        android:layout_width="340dp"
         android:layout_height="265dp"
-        android:layout_marginStart="66dp"
-        android:layout_marginTop="227dp"
-        android:layout_marginEnd="19dp"
-        android:layout_marginBottom="277dp"
         android:ems="10"
-        android:hint="Write your comment here to the review"
+        android:hint="Write your comment to the review here"
         android:inputType="textPersonName"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.302" />
 
     <Button
         android:id="@+id/apply"
         android:layout_width="177dp"
         android:layout_height="97dp"
-        android:layout_marginStart="124dp"
-        android:layout_marginTop="623dp"
-        android:layout_marginEnd="76dp"
-        android:layout_marginBottom="49dp"
         android:text="apply"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.847" />
 </androidx.constraintlayout.widget.ConstraintLayout>

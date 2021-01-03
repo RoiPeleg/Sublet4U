@@ -70,7 +70,7 @@ public class FindApartmentUser extends AppCompatActivity {
         mDisplayLeave = findViewById(R.id.displayLeave);
         mDisplayArrive = findViewById(R.id.displayArrive);
         showTheArriveDate = (TextView) findViewById(R.id.showTheArrive);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.clientToolbar);
         setSupportActionBar(toolbar);
 
         //arrive
@@ -237,6 +237,9 @@ public class FindApartmentUser extends AppCompatActivity {
                 Intent i3 = new Intent(new Intent(getApplicationContext(), SettingsClientActivity.class));
                 startActivity(i3);
                 return true;
+            case R.id.itemCLientSignOut:
+                Toast.makeText(this, "Sign Out", Toast.LENGTH_SHORT);
+                return true;
             default:
                 Toast.makeText(this, "nothing chosen", Toast.LENGTH_SHORT);
             return super.onOptionsItemSelected(item);
@@ -280,7 +283,6 @@ public class FindApartmentUser extends AppCompatActivity {
     private void check (List<String> apartments){
         final Button like = findViewById(R.id.like);
         final Button dislike = findViewById(R.id.dislike);
-        final Button design = findViewById(R.id.design);
 
         Iterator<String> appartmentsIterator = apartments.iterator();
         apartID = appartmentsIterator.next();
@@ -323,29 +325,13 @@ public class FindApartmentUser extends AppCompatActivity {
                 }
             }
         });
-        design.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                //just skip the picture and keep going to the next apartment
-                Intent i = new Intent(new Intent(getApplicationContext(), ProfileActivity.class));
-                startActivity(i);
-            }
-        });
+
         final Button watchRating = findViewById(R.id.ratingOfThisApa);
         watchRating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(new Intent(getApplicationContext(), WatchReviewsActivity.class));
                 i.putExtra("apartmentID", apartID);
-                startActivity(i);
-            }
-        });
-        final Button signOut = findViewById(R.id.signOut);
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(new Intent(getApplicationContext(), LoginActivity.class));
                 startActivity(i);
             }
         });
