@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sublet4U">
-        <activity android:name=".owner.ApplyCommentActivity"></activity>
+        <activity
+            android:name=".owner.ActivitySales"
+            android:label="@string/title_activity_sales"
+            android:theme="@style/Theme.Sublet4U.NoActionBar"></activity>
+        <activity android:name=".owner.ApplyCommentActivity" />
         <activity android:name=".owner.WatchReviewsActivity" />
         <activity
             android:name=".owner.PropertiesActivity"

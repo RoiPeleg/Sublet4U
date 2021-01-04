@@ -127,6 +127,9 @@ public class OwnerActivity extends AppCompatActivity {
             case R.id.itemOwnerSignOut:
                 Toast.makeText(this, "Sign Out", Toast.LENGTH_SHORT);
                 return true;
+            case R.id.itemSales:
+                startActivity(new Intent(new Intent(getApplicationContext(), ActivitySales.class)));
+                return true;
             default:
                 Toast.makeText(this, "nothing chosen", Toast.LENGTH_SHORT);
                 return super.onOptionsItemSelected(item);

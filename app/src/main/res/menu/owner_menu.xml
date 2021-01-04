@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/itemSales"
+        android:title="Sales" />
+    <item
         android:id="@+id/itemProperty"
         android:title="My Appartments"
         app:showAsAction="never"

@@ -8,6 +8,8 @@ public class Apartment {
     public String address;
     public String ownerID;
     public int price;
+    public int discount;
+    public boolean isOnSale;
 
     public Apartment(){
         this.name = "";
@@ -15,6 +17,8 @@ public class Apartment {
         this.address = "";
         this.ownerID = "";
         this.price = 0;
+        this.discount = 100;
+        this.isOnSale = false;
     }
 
     public Apartment(String name1, String desc, String address, String ownerID, int price){

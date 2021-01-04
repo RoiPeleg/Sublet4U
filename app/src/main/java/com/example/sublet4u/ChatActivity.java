@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -71,7 +72,6 @@ public class ChatActivity extends AppCompatActivity {
     private String mUsername;
     private String mPhotoUrl;
     private SharedPreferences mSharedPreferences;
-    private String mSignInClient;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference mFirebaseDatabaseReference;
@@ -97,11 +97,11 @@ public class ChatActivity extends AppCompatActivity {
         mUsername = ANONYMOUS;
         Intent receivedIntent  = getIntent();
         String reID = receivedIntent.getStringExtra("reID");
-        System.out.println(reID);
         database = FirebaseDatabase.getInstance();
         mFirebaseDatabaseReference = database.getReference("");
         mAuth = FirebaseAuth.getInstance();
-
+        if (mAuth.getCurrentUser().getPhotoUrl() != null)
+            mPhotoUrl = mAuth.getCurrentUser().getPhotoUrl().toString();
         // Initialize ProgressBar and RecyclerView.
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mMessageRecyclerView = (RecyclerView) findViewById(R.id.messageRecyclerView);
@@ -140,7 +140,7 @@ public class ChatActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NotNull final MessageViewHolder viewHolder,
                                             int position,
                                             @NotNull Message friendlyMessage) {
-                mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+              mProgressBar.setVisibility(ProgressBar.INVISIBLE);
                 if ((friendlyMessage.getReceiverID().equals(mAuth.getUid()) && friendlyMessage.getSenderID().equals(reID)) || (friendlyMessage.getReceiverID().equals(reID) && friendlyMessage.getSenderID().equals(mAuth.getUid()))) {
                     if (friendlyMessage.getText() != null) {
                         viewHolder.messageTextView.setText(friendlyMessage.getText());
@@ -181,7 +181,7 @@ public class ChatActivity extends AppCompatActivity {
                         viewHolder.messengerImageView.setImageDrawable(ContextCompat.getDrawable(ChatActivity.this,
                                 R.drawable.ic_account_circle_black_36dp));
                     } else {
-                        viewHolder.messageImageView.setImageURI(Uri.parse(friendlyMessage.getPhotoUrl()));
+                       // viewHolder.messengerImageView.setImageURI(Uri.parse(friendlyMessage.getPhotoUrl()));
                     }
 
                 }
@@ -245,7 +245,7 @@ public class ChatActivity extends AppCompatActivity {
                         reID,
                          mAuth.getUid(),
                          mPhotoUrl,
-                        null /* no image */);
+                        null/* no image */);
                 mFirebaseDatabaseReference.child(MESSAGES_CHILD)
                         .push().setValue(friendlyMessage);
                 mMessageEditText.setText("");
@@ -253,6 +253,7 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         mAddMessageImageView = (ImageView) findViewById(R.id.addMessageImageView);
+        mAddMessageImageView.setVisibility(View.VISIBLE);
         mAddMessageImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

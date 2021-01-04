@@ -27,4 +27,5 @@
     <string name="title_activity_client_boc">ClientBocActivity</string>
     <string name="title_activity_client_in_box" />
     <string name="title_activity_priority">PriorityActivity</string>
+    <string name="title_activity_sales">ActivitySales</string>
 </resources>
