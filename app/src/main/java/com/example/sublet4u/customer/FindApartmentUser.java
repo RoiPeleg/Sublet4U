@@ -34,6 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.collection.LLRBNode;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -59,7 +60,7 @@ public class FindApartmentUser extends AppCompatActivity {
     private TextView showTheArriveDate;
     private TextView showTheLeaveDate;
     public String arriveDate, leaveDate;
-    int p=0;
+    double p=0;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -265,8 +266,13 @@ public class FindApartmentUser extends AppCompatActivity {
                                 descriptionInImg.setText(apart.desc);
                                 nameInImg.setText(apart.name);
                                 addressInImg.setText(apart.address);
-                                apartmentPrice.setText(Integer.toString(apart.price));
                                 p = apart.price;
+                                if (apart.isOnSale ) {
+                                    apartmentPrice.setTextColor(Color.RED);
+                                    p = p * ((100-(double)apart.discount)/100);
+                                }
+                                apartmentPrice.setText(Double.toString(p));
+
                             }
 
                             @Override
