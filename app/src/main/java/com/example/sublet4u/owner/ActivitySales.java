@@ -9,6 +9,8 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -70,6 +72,25 @@ public class ActivitySales extends AppCompatActivity {
 
             }
         });
+        InputFilter in = new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                try {
+                    // Remove the string out of destination that is to be replaced
+                    String newVal = dest.toString().substring(0, dstart) + dest.toString().substring(dend, dest.toString().length());
+                    // Add the new string in
+                    newVal = newVal.substring(0, dstart) + source.toString() + newVal.substring(dstart, newVal.length());
+                    int input = Integer.parseInt(newVal);
+                    if (isInRange(1, 99, input))
+                        return null;
+                } catch (NumberFormatException nfe) { }
+                return "";
+            }
+            private boolean isInRange(int a, int b, int c) {
+                return b > a ? c >= a && c <= b : c >= b && c <= a;
+            }
+        };
+        discount.setFilters(new InputFilter[]{in});
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -270,8 +270,10 @@ public class FindApartmentUser extends AppCompatActivity {
                                 if (apart.isOnSale ) {
                                     apartmentPrice.setTextColor(Color.RED);
                                     p = p * ((100-(double)apart.discount)/100);
+                                    apartmentPrice.setText(Double.toString(p) + " SALE!");
                                 }
-                                apartmentPrice.setText(Double.toString(p));
+                                else
+                                    apartmentPrice.setText(Double.toString(p));
 
                             }
 
