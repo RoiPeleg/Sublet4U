@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class OwnerActivity extends AppCompatActivity {
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +45,9 @@ public class OwnerActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.ownerToolbar);
         setSupportActionBar(toolbar);
 
-        FirebaseAuth mAuth;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("");
-        mAuth = FirebaseAuth.getInstance();
+
 
         textView.setText(Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
         ArrayList<String> allApartment = new ArrayList<>();
@@ -125,13 +125,16 @@ public class OwnerActivity extends AppCompatActivity {
                 startActivity(i2);
                 return true;
             case R.id.itemOwnerSignOut:
-                Toast.makeText(this, "Sign Out", Toast.LENGTH_SHORT);
+                mAuth.signOut();
+                finish();
+                Toast.makeText(getApplicationContext(), "Sign Out", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 return true;
             case R.id.itemSales:
                 startActivity(new Intent(new Intent(getApplicationContext(), ActivitySales.class)));
                 return true;
             default:
-                Toast.makeText(this, "nothing chosen", Toast.LENGTH_SHORT);
+                Toast.makeText(getApplicationContext(), "nothing chosen", Toast.LENGTH_SHORT).show();
                 return super.onOptionsItemSelected(item);
         }
     }

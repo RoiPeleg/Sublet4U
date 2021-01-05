@@ -18,9 +18,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.text.DecimalFormat;
 
 public class RateApartmentActivity extends AppCompatActivity {
 
@@ -71,6 +74,30 @@ public class RateApartmentActivity extends AppCompatActivity {
                                     Invitation inv = snapshot.getValue(Invitation.class);
                                     String ap_id = inv.getApartmentID();
                                     myRef.child("Rating").child(rate_id).setValue(new Rating(invitationID, ap_id ,rateNumber.getText().toString(), writeReview.getText().toString()));
+                                    Query ownerApa =  myRef.child("Rating").orderByChild("apartmentID").equalTo(ap_id);
+                                    ownerApa.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            double sum = 0;
+                                            int count = 0;
+                                            for (DataSnapshot s : snapshot.getChildren())
+                                            {
+                                                Rating rate = s.getValue(Rating.class);
+                                                assert rate != null;
+                                                sum += Double.parseDouble(rate.rateNumber);
+                                                count++;
+                                            }
+                                            DecimalFormat twoDForm = new DecimalFormat("#.##");
+                                            myRef.child("apartment").child(ap_id).child("grade").setValue(Double.valueOf(twoDForm.format(sum / count)));
+                                            myRef.child("apartment").child(ap_id).child("invertedGrade").setValue(Double.valueOf(twoDForm.format(sum / (-1 * count) )));
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
                                     Toast.makeText(getApplicationContext(), "sent", Toast.LENGTH_LONG).show();
                                     Intent i = new Intent(RateApartmentActivity.this, ClientInBoxActivity.class);
                                     startActivity(i);

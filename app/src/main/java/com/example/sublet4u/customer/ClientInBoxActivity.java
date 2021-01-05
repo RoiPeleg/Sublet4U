@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -30,6 +31,7 @@ import com.example.sublet4u.data.model.Respond;
 import com.example.sublet4u.owner.ApplyCommentActivity;
 import com.example.sublet4u.owner.ConfinInviteActivity;
 import com.example.sublet4u.owner.OwnerActivity;
+import com.example.sublet4u.owner.PropertiesActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
@@ -184,6 +186,16 @@ public class ClientInBoxActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 System.out.println(error.toString());
+            }
+        });
+
+        final Button back = findViewById(R.id.hoBackFrom);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent i = new Intent(new Intent(getApplicationContext(), FindApartmentUser.class));
+                startActivity(i);
             }
         });
     }

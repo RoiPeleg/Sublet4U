@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class WatchReviewsActivity extends AppCompatActivity {
@@ -64,7 +65,16 @@ public class WatchReviewsActivity extends AppCompatActivity {
                     sum += Double.parseDouble(rate.rateNumber);
                     count++;
                 }
-                grade.setText("Apartment Grade: " + sum / count);
+                if (count == 0)
+                {
+                    grade.setText("Apartment Grade: No Rating Yet" );
+                }
+                else
+                {
+                    DecimalFormat twoDForm = new DecimalFormat("#.##");
+                    grade.setText("Apartment Grade: " + Double.valueOf(twoDForm.format(sum / count)));
+//                    myRef.child("apartment").child(ID).child("grade").setValue(Double.valueOf(twoDForm.format(sum / count)));
+                }
                 mListView.setAdapter(new ArrayAdapter<Rating>(WatchReviewsActivity.this,android.R.layout.simple_list_item_1,rating));
                 mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override

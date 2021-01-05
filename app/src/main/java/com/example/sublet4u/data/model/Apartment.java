@@ -7,6 +7,8 @@ public class Apartment {
     public  String desc;
     public String address;
     public String ownerID;
+    public double grade;
+    public double invertedGrade;
     public int price;
     public int discount;
     public boolean isOnSale;
@@ -19,6 +21,8 @@ public class Apartment {
         this.price = 0;
         this.discount = 100;
         this.isOnSale = false;
+        this.grade = 0;
+        this.invertedGrade = 0;
     }
 
     public Apartment(String name1, String desc, String address, String ownerID, int price){
@@ -27,6 +31,7 @@ public class Apartment {
         this.address = address;
         this.ownerID = ownerID;
         this.price = price;
+        this.invertedGrade = 0;
     }
 
     @NotNull

@@ -8,8 +8,8 @@
 
     <include
         android:id="@+id/clientToolbar"
-        layout="@layout/toolbar"
-        />
+        layout="@layout/toolbar" />
+
     <Button
         android:id="@+id/dislike"
         android:layout_width="170dp"
@@ -132,8 +132,8 @@
         android:layout_height="43dp"
         android:gravity="center"
         android:text="Arrive Date"
-        android:textSize="24dp"
         android:textColor="#0009ff"
+        android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.063"
@@ -195,6 +195,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.781" />
+
+    <TextView
+        android:id="@+id/textGrade"
+        android:layout_width="154dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="249dp"
+        android:layout_marginEnd="210dp"
+        android:layout_marginBottom="497dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

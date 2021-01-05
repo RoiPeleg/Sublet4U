@@ -63,7 +63,7 @@ public class  addapartmentActivity extends AppCompatActivity {
                 } else if (address.getText().toString().equals("") || address.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
                     Toast.makeText(getApplicationContext(), "Enter a real address", Toast.LENGTH_LONG).show();
                 } else if (price.getText().toString().equals("") || !(price.getText().toString().matches("\\d+(?:\\.\\d+)?"))) {
-                    Toast.makeText(getApplicationContext(), "Enter a the correct price", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Enter a positive and correct price", Toast.LENGTH_LONG).show();
                 }
                 else if (picturePath == null)
                 {

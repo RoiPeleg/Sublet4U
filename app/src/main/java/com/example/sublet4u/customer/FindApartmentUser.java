@@ -192,7 +192,7 @@ public class FindApartmentUser extends AppCompatActivity {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         yourName.setText(mAuth.getCurrentUser().getDisplayName());
-        Query listApartment = myRef.child("apartment").orderByValue();
+        Query listApartment = myRef.child("apartment").orderByChild("invertedGrade");
         listApartment.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -239,10 +239,13 @@ public class FindApartmentUser extends AppCompatActivity {
                 startActivity(i3);
                 return true;
             case R.id.itemCLientSignOut:
-                Toast.makeText(this, "Sign Out", Toast.LENGTH_SHORT);
+                mAuth.signOut();
+                finish();
+                Toast.makeText(getApplicationContext(), "Sign Out", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 return true;
             default:
-                Toast.makeText(this, "nothing chosen", Toast.LENGTH_SHORT);
+                Toast.makeText(getApplicationContext(), "nothing chosen", Toast.LENGTH_SHORT).show();
             return super.onOptionsItemSelected(item);
         }
     }
@@ -251,6 +254,7 @@ public class FindApartmentUser extends AppCompatActivity {
         final TextView addressInImg = findViewById(R.id.addressInImg);
         final TextView nameInImg = findViewById(R.id.nameInImg);
         final TextView descriptionInImg = findViewById(R.id.descriptionInImg);
+        final TextView textGrade = findViewById(R.id.textGrade);
         final TextView apartmentPrice = findViewById(R.id.price);
         final ImageView apaImage = findViewById(R.id.midImage);
 
@@ -274,6 +278,15 @@ public class FindApartmentUser extends AppCompatActivity {
                                 }
                                 else
                                     apartmentPrice.setText(Double.toString(p));
+
+                                if (apart.grade == 0)
+                                {
+                                    textGrade.setText("Apartment Grade: No Rating Yet");
+                                }
+                                else
+                                {
+                                    textGrade.setText("Apartment Grade: " + apart.grade);
+                                }
 
                             }
 
