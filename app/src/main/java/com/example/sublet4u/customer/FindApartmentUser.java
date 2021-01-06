@@ -426,9 +426,10 @@ public class FindApartmentUser extends AppCompatActivity {
                                     p = p * ((100-(double)apart.discount)/100);
                                     apartmentPrice.setText(Double.toString(p) + " SALE!");
                                 }
-                                else
+                                else {
                                     apartmentPrice.setText(Double.toString(p));
-
+                                    apartmentPrice.setTextColor(Color.BLACK);
+                                }
                                 if (apart.grade == 0)
                                 {
                                     textGrade.setText("Apartment Grade: No Rating Yet");
