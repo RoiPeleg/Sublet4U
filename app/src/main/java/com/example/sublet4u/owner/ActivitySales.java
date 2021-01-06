@@ -1,7 +1,9 @@
 package com.example.sublet4u.owner;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.sublet4u.customer.FindApartmentUser;
 import com.example.sublet4u.data.model.Apartment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -40,6 +42,7 @@ public class ActivitySales extends AppCompatActivity {
         setContentView(R.layout.activity_sales);
         Spinner spinner = findViewById(R.id.apa_chooser);
         Button upload = findViewById(R.id.upload);
+        Button back = findViewById(R.id.btnBack);
         TextView discount = findViewById(R.id.discount);
         CheckBox enable = findViewById(R.id.Enable);
         FirebaseAuth mAuth;
@@ -103,6 +106,16 @@ public class ActivitySales extends AppCompatActivity {
                     a.discount = Integer.parseInt(discount.getText().toString());
                     ap.child(ids.get(id)).setValue(a);
                 }
+                Intent i = new Intent(new Intent(getApplicationContext(), OwnerActivity.class));
+                startActivity(i);
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(new Intent(getApplicationContext(), OwnerActivity.class));
+                startActivity(i);
             }
         });
     }
