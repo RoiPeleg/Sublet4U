@@ -568,7 +568,7 @@ public class FindApartmentUser extends AppCompatActivity {
                                 try
                                 {
                                     Apartment ap = s.getValue(Apartment.class);
-                                    if (!aboveGrade.getText().toString().equals("") && switchSale.getShowText())
+                                    if (!aboveGrade.getText().toString().equals("") && switchSale.isChecked())
                                     {
                                         if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString())
                                         && ap.grade >= Double.parseDouble(aboveGrade.getText().toString())
@@ -577,7 +577,7 @@ public class FindApartmentUser extends AppCompatActivity {
                                             allApartments2.add(s.getKey());
                                         }
                                     }
-                                    else if (!aboveGrade.getText().toString().equals("") && !switchSale.getShowText())
+                                    else if (!aboveGrade.getText().toString().equals("") && ! switchSale.isChecked())
                                     {
                                         if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString())
                                                 && ap.grade >= Double.parseDouble(aboveGrade.getText().toString()))
@@ -585,14 +585,14 @@ public class FindApartmentUser extends AppCompatActivity {
                                             allApartments2.add(s.getKey());
                                         }
                                     }
-                                    else if (aboveGrade.getText().toString().equals("") && switchSale.getShowText())
+                                    else if (aboveGrade.getText().toString().equals("") &&  switchSale.isChecked())
                                     {
                                         if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString()) && ap.isOnSale)
                                         {
                                             allApartments2.add(s.getKey());
                                         }
                                     }
-                                    else if (aboveGrade.getText().toString().equals("") && !switchSale.getShowText())
+                                    else if (aboveGrade.getText().toString().equals("") && ! switchSale.isChecked())
                                     {
                                         if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString()))
                                         {
@@ -631,7 +631,7 @@ public class FindApartmentUser extends AppCompatActivity {
                                 try
                                 {
                                     Apartment ap = s.getValue(Apartment.class);
-                                    if (!aboveGrade.getText().toString().equals("") && switchSale.getShowText())
+                                    if (!aboveGrade.getText().toString().equals("") &&  switchSale.isChecked())
                                     {
                                         if (ap.grade >= Double.parseDouble(aboveGrade.getText().toString())
                                                 && ap.isOnSale)
@@ -639,21 +639,21 @@ public class FindApartmentUser extends AppCompatActivity {
                                             allApartments2.add(s.getKey());
                                         }
                                     }
-                                    else if (!aboveGrade.getText().toString().equals("") && !switchSale.getShowText())
+                                    else if (!aboveGrade.getText().toString().equals("") && !switchSale.isChecked())
                                     {
                                         if (ap.grade >= Double.parseDouble(aboveGrade.getText().toString()))
                                         {
                                             allApartments2.add(s.getKey());
                                         }
                                     }
-                                    else if (aboveGrade.getText().toString().equals("") && switchSale.getShowText())
+                                    else if (aboveGrade.getText().toString().equals("") && switchSale.isChecked())
                                     {
                                         if (ap.isOnSale)
                                         {
                                             allApartments2.add(s.getKey());
                                         }
                                     }
-                                    else if (aboveGrade.getText().toString().equals("") && !switchSale.getShowText())
+                                    else if (aboveGrade.getText().toString().equals("") && !switchSale.isChecked())
                                     {
                                         allApartments2.add(s.getKey());
                                     }
@@ -701,7 +701,7 @@ public class FindApartmentUser extends AppCompatActivity {
                                     try
                                     {
                                         Apartment ap = s.getValue(Apartment.class);
-                                        if (!untilPrice.getText().toString().equals("") && switchSale.getShowText())
+                                        if (!untilPrice.getText().toString().equals("") &&  switchSale.isChecked())
                                         {
                                             if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString())
                                                     && ap.grade >= Double.parseDouble(aboveGrade.getText().toString())
@@ -710,7 +710,7 @@ public class FindApartmentUser extends AppCompatActivity {
                                                 allApartments3.add(s.getKey());
                                             }
                                         }
-                                        else if (!untilPrice.getText().toString().equals("") && !switchSale.getShowText())
+                                        else if (!untilPrice.getText().toString().equals("") && !switchSale.isChecked())
                                         {
                                             if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString())
                                                     && ap.grade >= Double.parseDouble(aboveGrade.getText().toString()))
@@ -718,14 +718,14 @@ public class FindApartmentUser extends AppCompatActivity {
                                                 allApartments3.add(s.getKey());
                                             }
                                         }
-                                        else if (untilPrice.getText().toString().equals("") && switchSale.getShowText())
+                                        else if (untilPrice.getText().toString().equals("") && switchSale.isChecked())
                                         {
                                             if (ap.grade >= Double.parseDouble(aboveGrade.getText().toString()) && ap.isOnSale)
                                             {
                                                 allApartments3.add(s.getKey());
                                             }
                                         }
-                                        else if (untilPrice.getText().toString().equals("") && !switchSale.getShowText())
+                                        else if (untilPrice.getText().toString().equals("") && !switchSale.isChecked())
                                         {
                                             if (ap.grade >= Double.parseDouble(aboveGrade.getText().toString()))
                                             {
@@ -765,7 +765,7 @@ public class FindApartmentUser extends AppCompatActivity {
                                     try
                                     {
                                         Apartment ap = s.getValue(Apartment.class);
-                                        if (!untilPrice.getText().toString().equals("") && switchSale.getShowText())
+                                        if (!untilPrice.getText().toString().equals("") && switchSale.isChecked())
                                         {
                                             if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString())
                                                     && ap.isOnSale)
@@ -773,21 +773,21 @@ public class FindApartmentUser extends AppCompatActivity {
                                                 allApartments3.add(s.getKey());
                                             }
                                         }
-                                        else if (!untilPrice.getText().toString().equals("") && !switchSale.getShowText())
+                                        else if (!untilPrice.getText().toString().equals("") && !switchSale.isChecked())
                                         {
                                             if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString()))
                                             {
                                                 allApartments3.add(s.getKey());
                                             }
                                         }
-                                        else if (untilPrice.getText().toString().equals("") && switchSale.getShowText())
+                                        else if (untilPrice.getText().toString().equals("") &&  switchSale.isChecked())
                                         {
                                             if (ap.isOnSale)
                                             {
                                                 allApartments3.add(s.getKey());
                                             }
                                         }
-                                        else if (untilPrice.getText().toString().equals("") && !switchSale.getShowText())
+                                        else if (untilPrice.getText().toString().equals("") && !switchSale.isChecked())
                                         {
                                             allApartments3.add(s.getKey());
                                         }
