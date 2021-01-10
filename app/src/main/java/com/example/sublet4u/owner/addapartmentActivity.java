@@ -1,6 +1,7 @@
 package com.example.sublet4u.owner;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -11,8 +12,10 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,28 +33,44 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class  addapartmentActivity extends AppCompatActivity {
-    private ImageView imageView;
     private StorageReference storageRef;
     private String picturePath;
+    private ImageSwitcher imageSwitcher;
+    private Button previousBtn, nextBtn, addPicsBtn;
+    private ArrayList<Uri> photos;
+    private static final int PICK_IMAGES_CODE = 0;
+    int position = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addapartment);
         final Button done = findViewById(R.id.done);
-        final Button addP = findViewById(R.id.photos);
+        addPicsBtn = findViewById(R.id.addPhotosbtn);
+        previousBtn = findViewById(R.id.btnPrevious);
+        nextBtn = findViewById(R.id.btnNext);
         final EditText name = findViewById(R.id.Name);
         final EditText desc = findViewById(R.id.description);
         final EditText address = findViewById(R.id.address);
         final EditText price = findViewById(R.id.price);
-        imageView = findViewById(R.id.imageView);
+        imageSwitcher = findViewById(R.id.imageView);
+        photos = new ArrayList<>();
         FirebaseAuth mAuth;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("");
         mAuth = FirebaseAuth.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
+
+        imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                ImageView imageView = new ImageView(getApplicationContext());
+                return imageView;
+            }
+        });
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,77 +84,104 @@ public class  addapartmentActivity extends AppCompatActivity {
                 } else if (price.getText().toString().equals("") || !(price.getText().toString().matches("\\d+(?:\\.\\d+)?"))) {
                     Toast.makeText(getApplicationContext(), "Enter a positive and correct price", Toast.LENGTH_LONG).show();
                 }
-                else if (picturePath == null)
+                else if (photos.isEmpty())
                 {
                     Toast.makeText(getApplicationContext(), "Add a picture please", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
-                    myRef.child("apartment").child(ap_id).setValue(new Apartment(name.getText().toString(), desc.getText().toString(), address.getText().toString(), mAuth.getCurrentUser().getUid(), Integer.parseInt(price.getText().toString())));
-                    Uri file = Uri.fromFile(new File(picturePath));
-                    StorageReference riversRef = storageRef.child("images/").child(ap_id + "").child("firstIm");
-                    UploadTask uploadTask = riversRef.putFile(file);
+                    myRef.child("apartment").child(ap_id).setValue(new Apartment(name.getText().toString(), desc.getText().toString(), address.getText().toString(),
+                            mAuth.getCurrentUser().getUid(), Integer.parseInt(price.getText().toString())));
+                    for (int i=0; i<photos.size();i++) {
+                        StorageReference imageRef = storageRef.child("images/").child(ap_id + "").child("photo" + i);
+                        UploadTask uploadTask = imageRef.putFile(photos.get(i));
 
-                    // Register observers to listen for when the download is done or if it fails
-                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            Toast.makeText(getApplicationContext(), "Upload Failed", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                            Toast.makeText(getApplicationContext(), "Upload Successful", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                        // Register observers to listen for when the download is done or if it fails
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Toast.makeText(getApplicationContext(), "Upload Failed", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                                Toast.makeText(getApplicationContext(), "Upload Successful", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
 
                     Intent i = new Intent(new Intent(getApplicationContext(), OwnerActivity.class));
                     startActivity(i);
                 }
             }
         });
-        addP.setOnClickListener(new View.OnClickListener() {
+        addPicsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                try {
-                    if (ActivityCompat.checkSelfPermission(addapartmentActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(addapartmentActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                    } else {
-                        Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        startActivityForResult(galleryIntent, 1);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
+            public void onClick(View view) {
+                pickImagesIntent();
             }
         });
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (position < photos.size()-1){
+                    position++;
+                    imageSwitcher.setImageURI(photos.get(position));
+                }
+                else{
+                    Toast.makeText(addapartmentActivity.this, "No next images", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        previousBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (position > 0){
+                    position--;
+                    imageSwitcher.setImageURI(photos.get(position));
+                }
+                else{
+                    Toast.makeText(addapartmentActivity.this, "No previous images", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void pickImagesIntent(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Image(s)"), PICK_IMAGES_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_CANCELED) {
-                    if (resultCode == RESULT_OK && data != null) {
-                        Uri selectedImage = data.getData();
-                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                        if (selectedImage != null) {
-                            Cursor cursor = getContentResolver().query(selectedImage,
-                                    filePathColumn, null, null, null);
-                            if (cursor != null) {
-                                cursor.moveToFirst();
 
-                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                                picturePath = cursor.getString(columnIndex);
-
-                                imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-                                cursor.close();
-                            }
-                        }
+        if (requestCode == PICK_IMAGES_CODE){
+            if (resultCode == Activity.RESULT_OK){
+                if(data.getClipData() != null){
+                    int count = data.getClipData().getItemCount();
+                    for (int i=0;i<count;i++){
+                        Uri imageUri = data.getClipData().getItemAt(i).getUri();
+                        photos.add(imageUri);
+                    }
+                    imageSwitcher.setImageURI(photos.get(0));
+                    position = 0;
+                }
+                else{
+                    Uri imageUri = data.getData();
+                    photos.add(imageUri);
+                    imageSwitcher.setImageURI(photos.get(0));
+                    position = 0;
+                }
+            }
         }
-    }
     }
 
 }

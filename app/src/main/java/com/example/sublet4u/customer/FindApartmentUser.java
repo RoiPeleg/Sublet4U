@@ -1,20 +1,26 @@
 package com.example.sublet4u.customer;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +28,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.sublet4u.R;
 import com.example.sublet4u.data.model.Respond;
@@ -40,6 +48,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.collection.LLRBNode;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
 import java.text.ParseException;
@@ -67,6 +76,68 @@ public class FindApartmentUser extends AppCompatActivity {
     private TextView showTheLeaveDate;
     public String arriveDate, leaveDate;
     double p=0;
+
+    class ViewPagerAdapter extends PagerAdapter {
+
+        // Context object
+        Context context;
+
+        // Array of images
+        ArrayList<StorageReference> images;
+
+        // Layout Inflater
+        LayoutInflater mLayoutInflater;
+
+
+        // Viewpager Constructor
+        public ViewPagerAdapter(Context context, ArrayList<StorageReference> images) {
+            this.context = context;
+            this.images = images;
+            mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public int getCount() {
+            // return the number of images
+            return images.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+            return view == ((LinearLayout) object);
+        }
+
+        @NonNull
+        @Override
+        public Object instantiateItem(@NonNull ViewGroup container, final int position) {
+            // inflating the item.xml
+            View itemView = mLayoutInflater.inflate(R.layout.item_image, container, false);
+
+            // referencing the image view from the item.xml file
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.imageToClient);
+
+            // setting the image in the imageView
+            images.get(position).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>(){
+
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    imageView.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                }
+            });
+
+            // Adding the View
+            Objects.requireNonNull(container).addView(itemView);
+
+            return itemView;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+
+            container.removeView((LinearLayout) object);
+        }
+    }
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -416,13 +487,27 @@ public class FindApartmentUser extends AppCompatActivity {
         final TextView descriptionInImg = findViewById(R.id.descriptionInImg);
         final TextView textGrade = findViewById(R.id.textGrade);
         final TextView apartmentPrice = findViewById(R.id.price);
-        final ImageView apaImage = findViewById(R.id.midImage);
+        final ViewPager apaImage = findViewById(R.id.midImage);
+        final ArrayList<StorageReference> photos = new ArrayList<>();
 
-        storageRef.child("images/"+ ID +"/firstIm").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        StorageReference listRef = storageRef.child("images/"+ID);
+
+        listRef.listAll()
+                .addOnSuccessListener(new OnSuccessListener<ListResult>() {
                     @Override
-                    public void onSuccess(byte[] bytes) {
-                        // Use the bytes to display the image
-                        apaImage.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+                    public void onSuccess(ListResult listResult) {
+                        for (StorageReference prefix : listResult.getPrefixes()) {
+                            // All the prefixes under listRef.
+                            // You may call listAll() recursively on them.
+                        }
+
+                        for (StorageReference item : listResult.getItems()) {
+                            photos.add(item);
+                        }
+                        ViewPagerAdapter IPA = new ViewPagerAdapter(getApplicationContext(), photos);
+
+                        // Adding the Adapter to the ViewPager
+                        apaImage.setAdapter(IPA);
                         myRef.child("apartment").child(ID).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -456,10 +541,14 @@ public class FindApartmentUser extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "can't load apartment", Toast.LENGTH_LONG).show();
                             }
                         });
-
                     }
-                }).addOnFailureListener(new OnFailureListener() {@Override public void onFailure(@NonNull Exception exception) {Toast.makeText(getApplicationContext(), "image failed "+exception.toString(), Toast.LENGTH_LONG).show(); }});
-
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Uh-oh, an error occurred!
+                    }
+                });
     }
 
     private void check (List<String> apartments){
