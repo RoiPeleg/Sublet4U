@@ -172,24 +172,24 @@
         android:textColor="#0009ff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintHorizontal_bias="0.055"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.232" />
+        app:layout_constraintVertical_bias="0.221" />
 
     <TextView
         android:id="@+id/showTheLeave"
-        android:layout_width="172dp"
-        android:layout_height="90dp"
+        android:layout_width="170dp"
+        android:layout_height="43dp"
         android:layout_marginEnd="25dp"
         android:text="Set here your leave date"
         android:textColor="#0009ff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.99"
+        app:layout_constraintHorizontal_bias="0.989"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.234" />
+        app:layout_constraintVertical_bias="0.208" />
 
     <Button
         android:id="@+id/ratingOfThisApa"
@@ -212,6 +212,53 @@
         android:layout_marginEnd="210dp"
         android:layout_marginBottom="497dp"
         android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Switch
+        android:id="@+id/switchSale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="250dp"
+        android:layout_marginTop="205dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="553dp"
+        android:text="Sale"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <EditText
+        android:id="@+id/untilPrice"
+        android:layout_width="102dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="237dp"
+        android:layout_marginTop="239dp"
+        android:layout_marginEnd="54dp"
+        android:layout_marginBottom="508dp"
+        android:ems="10"
+        android:hint="until price"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/aboveGrade"
+        android:layout_width="153dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="186dp"
+        android:layout_marginTop="274dp"
+        android:layout_marginEnd="54dp"
+        android:layout_marginBottom="466dp"
+        android:ems="10"
+        android:hint="above what grade"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

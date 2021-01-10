@@ -11,8 +11,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -348,8 +351,13 @@ public class FindApartmentUser extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot s : snapshot.getChildren()){
-                    try {
-                        allApartments.add(s.getKey());
+                    try
+                    {
+//                        Apartment ap = s.getValue(Apartment.class);
+//                        if (ap.price > 170)
+//                        {
+                            allApartments.add(s.getKey());
+//                        }
                     }
                     catch (Exception e){
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
@@ -364,6 +372,8 @@ public class FindApartmentUser extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "unable to load data", Toast.LENGTH_LONG).show();
             }
         });
+
+
     }
 
     @Override
@@ -454,7 +464,364 @@ public class FindApartmentUser extends AppCompatActivity {
     private void check (List<String> apartments){
         final Button like = findViewById(R.id.like);
         final Button dislike = findViewById(R.id.dislike);
+        final EditText aboveGrade = findViewById(R.id.aboveGrade);
+        final EditText untilPrice = findViewById(R.id.untilPrice);
+        final Switch switchSale = findViewById(R.id.switchSale);
 
+        switchSale.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                List <String> allApartments1 = new ArrayList<String>();
+                Query listApartment = myRef.child("apartment").orderByChild("invertedGrade");
+                listApartment.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        for (DataSnapshot s : snapshot.getChildren()){
+                            try
+                            {
+                                Apartment ap = s.getValue(Apartment.class);
+                                if (!aboveGrade.getText().toString().equals("") && !untilPrice.getText().toString().equals(""))
+                                {
+                                    if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString())
+                                            && ap.isOnSale == isChecked && ap.isOnSale
+                                    && ap.grade >= Double.parseDouble(aboveGrade.getText().toString()))
+                                    {
+                                        allApartments1.add(s.getKey());
+                                    }
+                                    else if (ap.grade >= Double.parseDouble(aboveGrade.getText().toString()) && !isChecked
+                                    && ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString()))
+                                    {
+                                        allApartments1.add(s.getKey());
+                                    }
+                                }
+                                else if (aboveGrade.getText().toString().equals("") && !untilPrice.getText().toString().equals(""))
+                                {
+                                    if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString()) && ap.isOnSale == isChecked && ap.isOnSale)
+                                    {
+                                        allApartments1.add(s.getKey());
+                                    }
+                                    else if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString()) && !isChecked)
+                                    {
+                                        allApartments1.add(s.getKey());
+                                    }
+                                }
+                                else if (!aboveGrade.getText().toString().equals("") && untilPrice.getText().toString().equals(""))
+                                {
+                                    if (ap.grade >= Double.parseDouble(aboveGrade.getText().toString()) && ap.isOnSale == isChecked && ap.isOnSale)
+                                    {
+                                        allApartments1.add(s.getKey());
+                                    }
+                                    else if (ap.grade >= Double.parseDouble(aboveGrade.getText().toString()) && !isChecked)
+                                    {
+                                        allApartments1.add(s.getKey());
+                                    }
+                                }
+                                else if (aboveGrade.getText().toString().equals("") && untilPrice.getText().toString().equals(""))
+                                {
+                                    if (ap.isOnSale == isChecked && ap.isOnSale)
+                                    {
+                                        allApartments1.add(s.getKey());
+                                    }
+                                    else if (!isChecked)
+                                    {
+                                        allApartments1.add(s.getKey());
+                                    }
+                                }
+
+                            }
+                            catch (Exception e){
+                                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        if (allApartments1.isEmpty())
+                        {
+                            Toast.makeText(getApplicationContext(), "No Apartments available", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                            check(allApartments1);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(getApplicationContext(), "unable to load data", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+        untilPrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                if (untilPrice.getText().toString().matches("\\d+(?:\\.\\d+)?"))
+                {
+                    List <String> allApartments2 = new ArrayList<String>();
+                    Query listApartment = myRef.child("apartment").orderByChild("invertedGrade");
+                    listApartment.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            for (DataSnapshot s : snapshot.getChildren()){
+                                try
+                                {
+                                    Apartment ap = s.getValue(Apartment.class);
+                                    if (!aboveGrade.getText().toString().equals("") && switchSale.getShowText())
+                                    {
+                                        if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString())
+                                        && ap.grade >= Double.parseDouble(aboveGrade.getText().toString())
+                                        && ap.isOnSale)
+                                        {
+                                            allApartments2.add(s.getKey());
+                                        }
+                                    }
+                                    else if (!aboveGrade.getText().toString().equals("") && !switchSale.getShowText())
+                                    {
+                                        if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString())
+                                                && ap.grade >= Double.parseDouble(aboveGrade.getText().toString()))
+                                        {
+                                            allApartments2.add(s.getKey());
+                                        }
+                                    }
+                                    else if (aboveGrade.getText().toString().equals("") && switchSale.getShowText())
+                                    {
+                                        if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString()) && ap.isOnSale)
+                                        {
+                                            allApartments2.add(s.getKey());
+                                        }
+                                    }
+                                    else if (aboveGrade.getText().toString().equals("") && !switchSale.getShowText())
+                                    {
+                                        if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString()))
+                                        {
+                                            allApartments2.add(s.getKey());
+                                        }
+                                    }
+                                }
+                                catch (Exception e){
+                                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                                }
+                            }
+                            if (allApartments2.isEmpty())
+                            {
+                                Toast.makeText(getApplicationContext(), "No Apartments available", Toast.LENGTH_LONG).show();
+                            }
+                            else
+                                check(allApartments2);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error)
+                        {
+                            Toast.makeText(getApplicationContext(), "unable to load data", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                else if (untilPrice.getText().toString().equals(""))
+                {
+                    List <String> allApartments2 = new ArrayList<String>();
+                    Query listApartment = myRef.child("apartment").orderByChild("invertedGrade");
+                    listApartment.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            for (DataSnapshot s : snapshot.getChildren()){
+                                try
+                                {
+                                    Apartment ap = s.getValue(Apartment.class);
+                                    if (!aboveGrade.getText().toString().equals("") && switchSale.getShowText())
+                                    {
+                                        if (ap.grade >= Double.parseDouble(aboveGrade.getText().toString())
+                                                && ap.isOnSale)
+                                        {
+                                            allApartments2.add(s.getKey());
+                                        }
+                                    }
+                                    else if (!aboveGrade.getText().toString().equals("") && !switchSale.getShowText())
+                                    {
+                                        if (ap.grade >= Double.parseDouble(aboveGrade.getText().toString()))
+                                        {
+                                            allApartments2.add(s.getKey());
+                                        }
+                                    }
+                                    else if (aboveGrade.getText().toString().equals("") && switchSale.getShowText())
+                                    {
+                                        if (ap.isOnSale)
+                                        {
+                                            allApartments2.add(s.getKey());
+                                        }
+                                    }
+                                    else if (aboveGrade.getText().toString().equals("") && !switchSale.getShowText())
+                                    {
+                                        allApartments2.add(s.getKey());
+                                    }
+                                }
+                                catch (Exception e){
+                                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                                }
+                            }
+                            if (allApartments2.isEmpty())
+                            {
+                                Toast.makeText(getApplicationContext(), "No Apartments available", Toast.LENGTH_LONG).show();
+                            }
+                            else
+                                check(allApartments2);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error)
+                        {
+                            Toast.makeText(getApplicationContext(), "unable to load data", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "You should write a number", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        aboveGrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                if (aboveGrade.getText().toString().matches("\\d+(?:\\.\\d+)?"))
+                {
+                    if (Integer.parseInt(aboveGrade.getText().toString()) <= 10 && Integer.parseInt(aboveGrade.getText().toString()) >= 1)
+                    {
+                        List <String> allApartments3 = new ArrayList<String>();
+                        Query listApartment = myRef.child("apartment").orderByChild("invertedGrade");
+                        listApartment.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                for (DataSnapshot s : snapshot.getChildren()){
+                                    try
+                                    {
+                                        Apartment ap = s.getValue(Apartment.class);
+                                        if (!untilPrice.getText().toString().equals("") && switchSale.getShowText())
+                                        {
+                                            if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString())
+                                                    && ap.grade >= Double.parseDouble(aboveGrade.getText().toString())
+                                                    && ap.isOnSale)
+                                            {
+                                                allApartments3.add(s.getKey());
+                                            }
+                                        }
+                                        else if (!untilPrice.getText().toString().equals("") && !switchSale.getShowText())
+                                        {
+                                            if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString())
+                                                    && ap.grade >= Double.parseDouble(aboveGrade.getText().toString()))
+                                            {
+                                                allApartments3.add(s.getKey());
+                                            }
+                                        }
+                                        else if (untilPrice.getText().toString().equals("") && switchSale.getShowText())
+                                        {
+                                            if (ap.grade >= Double.parseDouble(aboveGrade.getText().toString()) && ap.isOnSale)
+                                            {
+                                                allApartments3.add(s.getKey());
+                                            }
+                                        }
+                                        else if (untilPrice.getText().toString().equals("") && !switchSale.getShowText())
+                                        {
+                                            if (ap.grade >= Double.parseDouble(aboveGrade.getText().toString()))
+                                            {
+                                                allApartments3.add(s.getKey());
+                                            }
+                                        }
+
+                                    }
+                                    catch (Exception e){
+                                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                                if (allApartments3.isEmpty())
+                                {
+                                    Toast.makeText(getApplicationContext(), "No Apartments available", Toast.LENGTH_LONG).show();
+                                }
+                                else
+                                    check(allApartments3);
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(getApplicationContext(), "unable to load data", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                    else if (aboveGrade.getText().toString().equals(""))
+                    {
+                        List <String> allApartments3 = new ArrayList<String>();
+                        Query listApartment = myRef.child("apartment").orderByChild("invertedGrade");
+                        listApartment.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                for (DataSnapshot s : snapshot.getChildren()){
+                                    try
+                                    {
+                                        Apartment ap = s.getValue(Apartment.class);
+                                        if (!untilPrice.getText().toString().equals("") && switchSale.getShowText())
+                                        {
+                                            if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString())
+                                                    && ap.isOnSale)
+                                            {
+                                                allApartments3.add(s.getKey());
+                                            }
+                                        }
+                                        else if (!untilPrice.getText().toString().equals("") && !switchSale.getShowText())
+                                        {
+                                            if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString()))
+                                            {
+                                                allApartments3.add(s.getKey());
+                                            }
+                                        }
+                                        else if (untilPrice.getText().toString().equals("") && switchSale.getShowText())
+                                        {
+                                            if (ap.isOnSale)
+                                            {
+                                                allApartments3.add(s.getKey());
+                                            }
+                                        }
+                                        else if (untilPrice.getText().toString().equals("") && !switchSale.getShowText())
+                                        {
+                                            allApartments3.add(s.getKey());
+                                        }
+
+                                    }
+                                    catch (Exception e){
+                                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                                if (allApartments3.isEmpty())
+                                {
+                                    Toast.makeText(getApplicationContext(), "No Apartments available", Toast.LENGTH_LONG).show();
+                                }
+                                else
+                                    check(allApartments3);
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(getApplicationContext(), "unable to load data", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "Enter a number between 1-10", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Enter a number between 1-10", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         Iterator<String> appartmentsIterator = apartments.iterator();
 
         apartID = appartmentsIterator.next();
