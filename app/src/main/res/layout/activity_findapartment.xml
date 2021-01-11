@@ -26,6 +26,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.977" />
 
+
     <Button
         android:id="@+id/like"
         android:layout_width="170dp"
@@ -42,8 +43,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.975" />
-
+        app:layout_constraintVertical_bias="0.977" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/midImage"
@@ -53,11 +53,11 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.063"
+        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.614"
-        tools:srcCompat="@tools:sample/avatars" >
+        app:layout_constraintVertical_bias="0.579"
+        tools:srcCompat="@tools:sample/avatars">
 
     </androidx.viewpager.widget.ViewPager>
 
@@ -71,7 +71,7 @@
         android:textColorHint="#0009ff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.823"
+        app:layout_constraintHorizontal_bias="0.884"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.422" />
@@ -86,10 +86,10 @@
         android:textColorHint="#0009ff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.823"
+        app:layout_constraintHorizontal_bias="0.884"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.482" />
+        app:layout_constraintVertical_bias="0.476" />
 
     <TextView
         android:id="@+id/descriptionInImg"
@@ -101,10 +101,10 @@
         android:textColorHint="#0009ff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.823"
+        app:layout_constraintHorizontal_bias="0.884"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.605" />
+        app:layout_constraintVertical_bias="0.585" />
 
     <TextView
         android:id="@+id/yourName"
@@ -130,10 +130,10 @@
         android:textColorHint="#0009ff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.823"
+        app:layout_constraintHorizontal_bias="0.884"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.704" />
+        app:layout_constraintVertical_bias="0.678" />
 
     <TextView
         android:id="@+id/displayArrive"
@@ -145,10 +145,10 @@
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.063"
+        app:layout_constraintHorizontal_bias="0.093"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.116" />
+        app:layout_constraintVertical_bias="0.253" />
 
     <TextView
         android:id="@+id/displayLeave"
@@ -161,23 +161,23 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.961"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.116" />
+        app:layout_constraintVertical_bias="0.253" />
 
     <TextView
         android:id="@+id/showTheArrive"
-        android:layout_width="159dp"
-        android:layout_height="85dp"
+        android:layout_width="164dp"
+        android:layout_height="32dp"
         android:text="Set here your arrive date"
         android:textColor="#0009ff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.055"
+        app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.221" />
+        app:layout_constraintVertical_bias="0.306" />
 
     <TextView
         android:id="@+id/showTheLeave"
@@ -191,7 +191,7 @@
         app:layout_constraintHorizontal_bias="0.989"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.208" />
+        app:layout_constraintVertical_bias="0.311" />
 
     <Button
         android:id="@+id/ratingOfThisApa"
@@ -207,28 +207,30 @@
 
     <TextView
         android:id="@+id/textGrade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="249dp"
-        android:layout_marginEnd="210dp"
-        android:layout_marginBottom="497dp"
+        android:layout_width="101dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="589dp"
+        android:layout_marginEnd="238dp"
+        android:layout_marginBottom="169dp"
         android:text="TextView"
         android:textColor="#0009ff"
-        android:textSize="20dp"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.393" />
 
     <Switch
         android:id="@+id/switchSale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="250dp"
-        android:layout_marginTop="205dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginBottom="553dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="116dp"
+        android:layout_marginEnd="298dp"
+        android:layout_marginBottom="643dp"
         android:text="Sale"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -240,10 +242,9 @@
         android:id="@+id/untilPrice"
         android:layout_width="102dp"
         android:layout_height="38dp"
-        android:layout_marginStart="237dp"
-        android:layout_marginTop="239dp"
-        android:layout_marginEnd="54dp"
-        android:layout_marginBottom="508dp"
+        android:layout_marginStart="291dp"
+        android:layout_marginTop="113dp"
+        android:layout_marginBottom="634dp"
         android:ems="10"
         android:hint="until price"
         android:inputType="textPersonName"
@@ -256,10 +257,10 @@
         android:id="@+id/aboveGrade"
         android:layout_width="153dp"
         android:layout_height="45dp"
-        android:layout_marginStart="186dp"
-        android:layout_marginTop="274dp"
-        android:layout_marginEnd="54dp"
-        android:layout_marginBottom="466dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="106dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginBottom="634dp"
         android:ems="10"
         android:hint="above what grade"
         android:inputType="textPersonName"

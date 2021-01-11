@@ -776,62 +776,45 @@ public class FindApartmentUser extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                if (aboveGrade.getText().toString().matches("\\d+(?:\\.\\d+)?"))
-                {
-                    if (Integer.parseInt(aboveGrade.getText().toString()) <= 10 && Integer.parseInt(aboveGrade.getText().toString()) >= 1)
-                    {
-                        List <String> allApartments3 = new ArrayList<String>();
+                if (aboveGrade.getText().toString().matches("\\d+(?:\\.\\d+)?")) {
+                    if (Integer.parseInt(aboveGrade.getText().toString()) <= 10 && Integer.parseInt(aboveGrade.getText().toString()) >= 1) {
+                        List<String> allApartments3 = new ArrayList<String>();
                         Query listApartment = myRef.child("apartment").orderByChild("invertedGrade");
                         listApartment.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                for (DataSnapshot s : snapshot.getChildren()){
-                                    try
-                                    {
+                                for (DataSnapshot s : snapshot.getChildren()) {
+                                    try {
                                         Apartment ap = s.getValue(Apartment.class);
-                                        if (!untilPrice.getText().toString().equals("") &&  switchSale.isChecked())
-                                        {
-                                            if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString())
+                                        if (!untilPrice.getText().toString().equals("") && switchSale.isChecked()) {
+                                            if (ap.price * ((100 - (double) ap.discount) / 100) <= Integer.parseInt(untilPrice.getText().toString())
                                                     && ap.grade >= Double.parseDouble(aboveGrade.getText().toString())
-                                                    && ap.isOnSale)
-                                            {
+                                                    && ap.isOnSale) {
                                                 allApartments3.add(s.getKey());
                                             }
-                                        }
-                                        else if (!untilPrice.getText().toString().equals("") && !switchSale.isChecked())
-                                        {
-                                            if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString())
-                                                    && ap.grade >= Double.parseDouble(aboveGrade.getText().toString()))
-                                            {
+                                        } else if (!untilPrice.getText().toString().equals("") && !switchSale.isChecked()) {
+                                            if (ap.price * ((100 - (double) ap.discount) / 100) <= Integer.parseInt(untilPrice.getText().toString())
+                                                    && ap.grade >= Double.parseDouble(aboveGrade.getText().toString())) {
                                                 allApartments3.add(s.getKey());
                                             }
-                                        }
-                                        else if (untilPrice.getText().toString().equals("") && switchSale.isChecked())
-                                        {
-                                            if (ap.grade >= Double.parseDouble(aboveGrade.getText().toString()) && ap.isOnSale)
-                                            {
+                                        } else if (untilPrice.getText().toString().equals("") && switchSale.isChecked()) {
+                                            if (ap.grade >= Double.parseDouble(aboveGrade.getText().toString()) && ap.isOnSale) {
                                                 allApartments3.add(s.getKey());
                                             }
-                                        }
-                                        else if (untilPrice.getText().toString().equals("") && !switchSale.isChecked())
-                                        {
-                                            if (ap.grade >= Double.parseDouble(aboveGrade.getText().toString()))
-                                            {
+                                        } else if (untilPrice.getText().toString().equals("") && !switchSale.isChecked()) {
+                                            if (ap.grade >= Double.parseDouble(aboveGrade.getText().toString())) {
                                                 allApartments3.add(s.getKey());
                                             }
                                         }
 
-                                    }
-                                    catch (Exception e){
+                                    } catch (Exception e) {
                                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                                     }
                                 }
-                                if (allApartments3.isEmpty())
-                                {
+                                if (allApartments3.isEmpty()) {
                                     Toast.makeText(getApplicationContext(), "No Apartments available", Toast.LENGTH_LONG).show();
-                                }
-                                else
+                                } else
                                     check(allApartments3);
 
                             }
@@ -842,72 +825,69 @@ public class FindApartmentUser extends AppCompatActivity {
                             }
                         });
                     }
-                    else if (aboveGrade.getText().toString().equals(""))
-                    {
-                        List <String> allApartments3 = new ArrayList<String>();
-                        Query listApartment = myRef.child("apartment").orderByChild("invertedGrade");
-                        listApartment.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                }
+                else if (aboveGrade.getText().toString().equals(""))
+                {
+                    List <String> allApartments3 = new ArrayList<String>();
+                    Query listApartment = myRef.child("apartment").orderByChild("invertedGrade");
+                    listApartment.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                for (DataSnapshot s : snapshot.getChildren()){
-                                    try
+                            for (DataSnapshot s : snapshot.getChildren()){
+                                try
+                                {
+                                    Apartment ap = s.getValue(Apartment.class);
+                                    if (!untilPrice.getText().toString().equals("") && switchSale.isChecked())
                                     {
-                                        Apartment ap = s.getValue(Apartment.class);
-                                        if (!untilPrice.getText().toString().equals("") && switchSale.isChecked())
-                                        {
-                                            if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString())
-                                                    && ap.isOnSale)
-                                            {
-                                                allApartments3.add(s.getKey());
-                                            }
-                                        }
-                                        else if (!untilPrice.getText().toString().equals("") && !switchSale.isChecked())
-                                        {
-                                            if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString()))
-                                            {
-                                                allApartments3.add(s.getKey());
-                                            }
-                                        }
-                                        else if (untilPrice.getText().toString().equals("") &&  switchSale.isChecked())
-                                        {
-                                            if (ap.isOnSale)
-                                            {
-                                                allApartments3.add(s.getKey());
-                                            }
-                                        }
-                                        else if (untilPrice.getText().toString().equals("") && !switchSale.isChecked())
+                                        if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString())
+                                                && ap.isOnSale)
                                         {
                                             allApartments3.add(s.getKey());
                                         }
-
                                     }
-                                    catch (Exception e){
-                                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                                    else if (!untilPrice.getText().toString().equals("") && !switchSale.isChecked())
+                                    {
+                                        if (ap.price * ((100-(double)ap.discount)/100) <= Integer.parseInt(untilPrice.getText().toString()))
+                                        {
+                                            allApartments3.add(s.getKey());
+                                        }
                                     }
-                                }
-                                if (allApartments3.isEmpty())
-                                {
-                                    Toast.makeText(getApplicationContext(), "No Apartments available", Toast.LENGTH_LONG).show();
-                                }
-                                else
-                                    check(allApartments3);
+                                    else if (untilPrice.getText().toString().equals("") &&  switchSale.isChecked())
+                                    {
+                                        if (ap.isOnSale)
+                                        {
+                                            allApartments3.add(s.getKey());
+                                        }
+                                    }
+                                    else if (untilPrice.getText().toString().equals("") && !switchSale.isChecked())
+                                    {
+                                        allApartments3.add(s.getKey());
+                                    }
 
+                                }
+                                catch (Exception e){
+                                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                                }
                             }
+                            if (allApartments3.isEmpty())
+                            {
+                                Toast.makeText(getApplicationContext(), "No Apartments available", Toast.LENGTH_LONG).show();
+                            }
+                            else
+                                check(allApartments3);
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                Toast.makeText(getApplicationContext(), "unable to load data", Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }
-                    else
-                    {
-                        Toast.makeText(getApplicationContext(), "Enter a number between 1-10", Toast.LENGTH_LONG).show();
-                    }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(getApplicationContext(), "unable to load data", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
                 else
                 {
+                    Toast.makeText(getApplicationContext(), aboveGrade.getText().toString() + "1", Toast.LENGTH_LONG).show();
                     Toast.makeText(getApplicationContext(), "Enter a number between 1-10", Toast.LENGTH_LONG).show();
                 }
             }
